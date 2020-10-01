@@ -2,50 +2,38 @@ const express = require('express')
 const bcryptjs = require('bcryptjs')
 const mongoose = require('mongoose')
 
-const User = require('../models/User.model.js')
+const User = require('../models/User.model.js');
+const Service = require("../models/Services.model.js");
 
 const router = express.Router()
 
 router.get("/", (req, res, next)=> {
-  res.render("auth/signup")
-})
+  Service.find({})
+    .then(servicesFromDB => {
+      res.render("auth/signup", {servicesFromDB})
+    })
+    .catch((err) => next(err))
+});
 
 const salt = bcryptjs.genSaltSync(10)
+console.log('sel:',salt);
 
-router.post('/signup', (req,res, next) => {
-  console.log('valeurs', req.body)
+router.post('/', (req,res, next) => {
+  const plainPassword = req.body.password;
+  const hashed = bcryptjs.hashSync(plainPassword, salt)
+  // console.log('valeurs', req.body)
   // enregistrer notre user en base
 
-  const {username, email, password} = req.body
-
-  //
-  // Validation server manuelle
-  //
-
-  // vérifier que req.body.username non-vide
-  // if (!username || !email || !password) {
-  //   res.render('auth/signup', {
-  //     errorMessage: 'Merci de remplir tous les champs'
-  //   })
-  //   return; // STOP
-  // }
-
-  //
-  //
-  //
-
-  const plainPassword = req.body.password;
-
-  const hashed = bcryptjs.hashSync(plainPassword, salt)
-  console.log('hashed=', hashed)
-
-  User.create({
-    username: req.body.username,
-    email: req.body.email,
+  const {firstname, lastname ,service ,role ,email ,passwordHash} = req.body;
+    User.create({
+    firstname: firstname,
+    lastname: lastname,
+    service: service,
+    role: role,
+    email: email,
     passwordHash: hashed
   }).then(userFromDb => {
-    // res.redirect('/profile')
-    res.send('user créé!')
+    res.redirect('/login')
   }).catch(err => {
     console.log('💥', err);
 
@@ -69,3 +57,4 @@ router.post('/signup', (req,res, next) => {
 })
 
 
+module.exports = router;

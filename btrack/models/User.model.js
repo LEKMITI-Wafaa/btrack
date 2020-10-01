@@ -1,4 +1,6 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require("mongoose");
+
+const {Schema,model} = mongoose;
 
 const userSchema = new Schema(
   {
@@ -14,7 +16,7 @@ const userSchema = new Schema(
       required: [true, 'Username is required.'],
       unique: true
     },
-    services:[{type: Schema.Types.ObjectId, ref: 'Services'}],
+    service:{type: Schema.Types.ObjectId, ref: 'Service'},
     role:{
       type: String
     },
@@ -26,7 +28,7 @@ const userSchema = new Schema(
       trim: true,
       match: [/.*@.*\..*/, 'Invalid email']
     },
-    password: {
+    passwordHash: {
       type: String,
       required: [true, 'Password is required.']
     }

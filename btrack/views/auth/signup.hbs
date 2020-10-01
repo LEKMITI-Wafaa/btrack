@@ -10,13 +10,14 @@
       <input type="text" name="lastname" placeholder="Your last name" />
     </label>
     Service
-    <select name="Service">
+    <select name="service">
       {{!-- afficher tous les service dans une boite select --}}
-      {{#each serviceFromDB}} 
+      {{#each servicesFromDB}} 
         <option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>{{name}}</option>
       {{/each}}
     </select>
-    <select name="Role">
+    Role
+    <select name="role" >
       <option value="manager">Manager</option>
       <option value="employee">Employee</option>
       <option value="validator">Validator</option>
@@ -33,11 +34,11 @@
     </label>
     <label>
       Confirm Password
-      <input type="password" name="password" class="input-password" placeholder="********" />
+      <input type="password" name="password2" class="input-password" placeholder="********" />
     </label>
  
-    <button type="submit">Create account</button>
-    <button type="reset">Cancel</button>
+    <button>Create account</button>
+    {{!-- <button type="reset">Cancel</button> --}}
  
     {{!-- error message will be added here --}}
     {{#if errorMessage}}

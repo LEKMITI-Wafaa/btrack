@@ -1,18 +1,14 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require("mongoose");
 
+const {Schema,model} = mongoose;
 const serviceSchema = new Schema(
   {
-    name:{
-      type: String
-    },
-    phone:{
-      type:String
-    },
-    manager:{
-      type:[{type: Schema.Types.ObjectId, ref: 'Users'}]
-    },
-    email:{
-      type:email
+    name:  String,
+    phone: String,
+    email: {
+      type: String,
+      match: /.*@.*\..*/
     }
   }
 )
+module.exports = model("Service", serviceSchema);
