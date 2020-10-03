@@ -1,0 +1,8 @@
+<h1>Bugs list</h1>
+<ul>
+    {{#each allBugsFromDB}}
+        <li>
+            Title : {{this.title}}     Rapporter : {{this.rapporter.firstname}}    Status : {{this.status}}
+        </li>
+    {{/each}}
+</ul>

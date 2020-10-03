@@ -1,0 +1,49 @@
+<div id="new-bug">
+  <h2>New Bug</h2>
+  <form action="/new-bug" method="POST">
+      <label>
+        title
+        <input type="text" name="title" placeholder="" />
+      </label>
+      <label>
+        rapporter 
+        {{!-- A remplir !!!!!--}}
+        <input type="text" name="rapporter" value="5f786d26f738316c9424b280" />
+      </label>
+      <label>
+        Description
+       <input type="text"  name="description" placeholder="Your description" />
+      </label>
+      <label>
+        Solution
+        <input type="text"  name="solution" placeholder="the solution" />
+      </label>
+      <label>
+        Services
+        <select name="service" multiple>
+        {{!-- afficher tous les service dans une boite select --}}
+        {{#each servicesFromDB}}
+        <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
+        {{/each}}
+        </select>
+       
+      </label>
+
+      <div>
+        Status :
+        <label>Approved </label> <input type="radio" name="status" value="Approved" />
+         <label>Not approved </label> <input type="radio" name="status" value="Not approved" />
+        
+      </div>
+      
+
+      <button>Save</button>
+      {{!-- <button type="reset">Cancel</button> --}}
+
+      {{!-- error message will be added here --}}
+      {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+      {{/if}}
+  </form>
+
+</div>
