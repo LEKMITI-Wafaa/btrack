@@ -12,22 +12,22 @@
     Service
     <select name="service">
       {{!-- afficher tous les service dans une boite select --}}
-      {{#each servicesFromDB}} 
-        <option value="{{id}}" {{#if selected}}selected="selected"{{/if}}>{{name}}</option>
+      {{#each servicesFromDB}}
+      <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
       {{/each}}
     </select>
     Role
-    <select name="role" >
+    <select name="role">
       <option value="manager">Manager</option>
       <option value="employee">Employee</option>
       <option value="validator">Validator</option>
     </select>
- 
+
     <label>
       Email
       <input type="text" id="input-email" name="email" placeholder="Your email" />
     </label>
- 
+
     <label>
       Password
       <input type="password" name="password" class="input-password" placeholder="********" />
@@ -36,10 +36,10 @@
       Confirm Password
       <input type="password" name="password2" class="input-password" placeholder="********" />
     </label>
- 
+
     <button>Create account</button>
     {{!-- <button type="reset">Cancel</button> --}}
- 
+
     {{!-- error message will be added here --}}
     {{#if errorMessage}}
     <p class="error">{{errorMessage}}</p>

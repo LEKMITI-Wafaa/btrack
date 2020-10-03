@@ -7,25 +7,25 @@ const Service = require("../models/Services.model.js");
 
 const router = express.Router()
 
-router.get("/", (req, res, next)=> {
+router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
-      res.render("auth/signup", {servicesFromDB})
+      res.render("auth/signup", { servicesFromDB })
     })
     .catch((err) => next(err))
 });
 
 const salt = bcryptjs.genSaltSync(10)
-console.log('sel:',salt);
+console.log('sel:', salt);
 
-router.post('/', (req,res, next) => {
+router.post('/', (req, res, next) => {
   const plainPassword = req.body.password;
   const hashed = bcryptjs.hashSync(plainPassword, salt)
   // console.log('valeurs', req.body)
   // enregistrer notre user en base
 
-  const {firstname, lastname ,service ,role ,email ,passwordHash} = req.body;
-    User.create({
+  const { firstname, lastname, service, role, email, passwordHash } = req.body;
+  User.create({
     firstname: firstname,
     lastname: lastname,
     service: service,
@@ -51,7 +51,7 @@ router.post('/', (req,res, next) => {
       next(err) // hotline
     }
 
-    
+
   })
 
 })
