@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const {Schema,model} = mongoose;
+const { Schema, model } = mongoose;
 const serviceSchema = new Schema(
   {
-    name:  String,
+    name: String,
     phone: String,
     email: {
       type: String,
@@ -11,4 +11,5 @@ const serviceSchema = new Schema(
     }
   }
 )
+
 module.exports = model("Service", serviceSchema);
