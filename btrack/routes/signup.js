@@ -10,6 +10,7 @@ const router = express.Router()
 router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
+      console.log(servicesFromDB);
       res.render("auth/signup", { servicesFromDB })
     })
     .catch((err) => next(err))
@@ -18,23 +19,32 @@ router.get("/", (req, res, next) => {
 const salt = bcryptjs.genSaltSync(10)
 console.log('sel:', salt);
 
+
+
 router.post('/', (req, res, next) => {
   const plainPassword = req.body.password;
   const hashed = bcryptjs.hashSync(plainPassword, salt)
   // console.log('valeurs', req.body)
   // enregistrer notre user en base
+  
+  const $pwd = req.body.password;
+  const $pwdConfirm = req.body.password2;
 
-  const { firstname, lastname, service, role, email, passwordHash } = req.body;
-  User.create({
+  if($pwd != $pwdConfirm)
+    {
+        throw new Error("check your password !");
+    }else{
+      const { firstname, lastname, service, role, email, passwordHash } = req.body;
+    User.create({
     firstname: firstname,
     lastname: lastname,
     service: service,
     role: role,
     email: email,
     passwordHash: hashed
-  }).then(userFromDb => {
+    }).then(userFromDb => {
     res.redirect('/login')
-  }).catch(err => {
+    }).catch(err => {
     console.log('💥', err);
 
     // new mongoose.Error.ValidationError()
@@ -52,9 +62,15 @@ router.post('/', (req, res, next) => {
     }
 
 
-  })
-
+   })
+    }
+  
+    
+  
+   
+  
 })
 
 
 module.exports = router;
+
