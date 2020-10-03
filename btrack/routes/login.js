@@ -7,7 +7,10 @@ const bcryptjs= require('bcryptjs');
 
 
 router.get('/', (req, res, next) => {
-    res.render('auth/login')
+    const data = {
+        layout: false
+      }
+    res.render('auth/login', data)
 })
 
 
