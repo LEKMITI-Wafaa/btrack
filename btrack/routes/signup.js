@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
       const data = {
         layout: false
       }
-      res.render("auth/signup", {servicesFromDB})
+      res.render("auth/signup", {data, servicesFromDB})
     })
     .catch((err) => next(err))
 });
