@@ -10,8 +10,8 @@ const router = express.Router()
 router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
-      const data = {layout: false, servicesFromDB}
-      res.render("auth/signup", data)
+      const data = {servicesFromDB}
+      res.render("auth/signup1", data)
     })
     .catch((err) => next(err))
 });
@@ -29,7 +29,7 @@ router.post('/', (req, res, next) => {
   const $pwd = req.body.password;
   const $pwdConfirm = req.body.password2;
   if($pwd != $pwdConfirm) {
-    res.render('auth/signup', {
+    res.render('auth/signup1', {
       errorMessage: "Confirmation password does not match!"
     })
     return;
@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
 
       console.log('Error de validation mongoose !')
 
-      res.render('auth/signup', {
+      res.render('auth/signup1', {
         errorMessage: err.message
       })
     } else {

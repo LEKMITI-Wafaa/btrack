@@ -1,21 +1,33 @@
-<div id="login">
-  <h2>Login</h2>
-  <form action="/login" method="POST">
+<form class="form-signin container w-50" action="/login" method="POST">
+  <div class="text-center mb-4">
+    <img class="mb-4" src="images/btrack-logo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">B-Track</h1>
+    <p>B-Track is your favorite tool to manage your bugs</p>
+  </div>
+
+  {{#if errorMessage}}
+  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+  {{/if}}
+
+  <div class="form-label-group mb-3">
+    <label for="inputEmail">Email address</label>
+    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
+      autofocus="">
+  </div>
+
+  <div class="form-label-group mb-3">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+  </div>
+
+  {{!-- <div class="checkbox mb-3">
     <label>
-      Email
-      <input type="email" id="input-email" name="email" placeholder="Your email" />
+      <input type="checkbox" value="remember-me"> Remember me
     </label>
+  </div> --}}
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <p class="mt-5 mb-3 text-muted text-center">© Marwa & Wafâa 2020</p>
 
-    <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="********" />
 
-    <a href="#"> Forget password </a>
-
-    <button type="submit">Log in</button>
-    {{!-- error message will be added here --}}
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
-  <button >Sign up</button>
-</div>
+</form>

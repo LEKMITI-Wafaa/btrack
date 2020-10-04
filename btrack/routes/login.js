@@ -8,7 +8,7 @@ const User = require('../models/User.model.js');
 
 
 router.get('/', (req, res, next) => {
-    res.render('auth/login', {layout: false})
+    res.render('auth/login')
 })
 
 router.post('/', (req, res, next) => {
