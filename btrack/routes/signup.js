@@ -10,10 +10,8 @@ const router = express.Router()
 router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
-      const data = {
-        layout: false
-      }
-      res.render("auth/signup", {servicesFromDB})
+      const data = {layout: false, servicesFromDB}
+      res.render("auth/signup", data)
     })
     .catch((err) => next(err))
 });
