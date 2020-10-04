@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
       const data = {servicesFromDB}
-      res.render("auth/signup1", data)
+      res.render("auth/signup", data)
     })
     .catch((err) => next(err))
 });
@@ -27,9 +27,9 @@ router.post('/', (req, res, next) => {
   // console.log('valeurs', req.body)
   // enregistrer notre user en base
   const $pwd = req.body.password;
-  const $pwdConfirm = req.body.password2;
+  const $pwdConfirm = req.body.confirmPassword;
   if($pwd != $pwdConfirm) {
-    res.render('auth/signup1', {
+    res.render('auth/signup', {
       errorMessage: "Confirmation password does not match!"
     })
     return;
@@ -52,7 +52,7 @@ router.post('/', (req, res, next) => {
 
       console.log('Error de validation mongoose !')
 
-      res.render('auth/signup1', {
+      res.render('auth/signup', {
         errorMessage: err.message
       })
     } else {

@@ -1,49 +1,70 @@
-<div id="signup">
-  <h2>Signup</h2>
-  <form id= "form" action="/signup" method="POST">
-      <label>
-        First name
-        <input type="text" name="firstname" placeholder="Your first name" />
-      </label>
-      <label>
-        Last name
-        <input type="text" name="lastname" placeholder="Your last name" />
-      </label>
-      Service
-      <select name="service">
+<form class="container w-50" action="/signup" method="POST">
+  <div class="text-center mb-4">
+    <img class="mb-4" src="images/btrack-logo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">B-Track</h1>
+    <p>B-Track is your favorite tool to manage your bugs</p>
+  </div>
+
+  {{#if errorMessage}}
+  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+  {{/if}}
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputFirstName">Firstname</label>
+      <input type="text" name="firstname" class="form-control" id="inputFirstName" placeholder="Laurent">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputLastname">Lastname</label>
+      <input type="text" name="lastname" class="form-control" id="inputLastname" placeholder="Dupont">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail">Email adress</label>
+    <input type="email" class="form-control" id="inputEmail" placeholder="example@example.com">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputPassword">Password</label>
+      <input type="password" name="password" class="form-control" id="inputPassword" placeholder="********">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputConfirmPassword">Confirm Password</label>
+      <input type="password" name="confirmPassword" class="form-control" id="inputConfirmPassword"
+        placeholder="********">
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="inputService">Service</label>
+      <select id="inputService" name="service" class="form-control">
         {{!-- afficher tous les service dans une boite select --}}
         {{#each servicesFromDB}}
         <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
         {{/each}}
       </select>
-      Role
-      <select name="role">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputRole">Role</label>
+      <select name="role" id="inputRole" class="form-control">
         <option value="manager">Manager</option>
         <option value="employee">Employee</option>
         <option value="validator">Validator</option>
       </select>
+    </div>
+  </div>
 
-      <label>
-        Email
-        <input type="text" id="input-email" name="email" placeholder="Your email" />
-      </label>
 
-      <label>
-        Password
-        <input type="password" name="password" class="input-password" placeholder="********" />
-      </label>
-      <label>
-        Confirm Password
-        <input type="password" name="password2" class="input-password" placeholder="********" />
-      </label>
+  <div class="form-group col-md-6">
 
-      <button>Create account</button>
-      {{!-- <button type="reset">Cancel</button> --}}
+  </div>
 
-      {{!-- error message will be added here --}}
-      {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-      {{/if}}
-  </form>
-  <a href="#">Log in</a>
-</div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Sign up</button>
+  <button type="reset" class="btn btn-secondary">Reset</button>
+  <a href="/login" class="badge badge-dark ml-3">Login</a>
+
+</form>
