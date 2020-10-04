@@ -1,6 +1,8 @@
 const express = require('express')
 const bcryptjs = require('bcryptjs')
 const mongoose = require('mongoose')
+const { body, check, validationResult } = require('express-validator');
+
 
 const User = require('../models/User.model.js');
 const Service = require("../models/Services.model.js");
@@ -10,58 +12,54 @@ const router = express.Router()
 router.get("/", (req, res, next) => {
   Service.find({})
     .then(servicesFromDB => {
-      const data = {servicesFromDB}
+      const data = { servicesFromDB }
       res.render("auth/signup", data)
     })
     .catch((err) => next(err))
 });
 
-const salt = bcryptjs.genSaltSync(10)
-console.log('sel:', salt);
 
+router.post('/', [
+  body('firstname', 'first name must have at least 3 chars').isLength({ min: 3 }),
+  body('lastname', 'last name must have at least 3 chars').isLength({ min: 3 }),
+  body('email', 'email is not valid').isEmail(),
+  check('password')
+    .isLength({ min: 8 }).withMessage('password must be at least 8 chars long.')
+    .matches("(?=.*\d*)").withMessage('password must contain at least a number.')
+    .matches("(?=.*[a-z]*)").withMessage('password must contain at least a lowercase char.')
+    .matches("(?=.*[A-Z]*)").withMessage('password must contain at least an uppercase char.')
+], async(req, res, next) => {
 
+  const { firstname, lastname, service, role, email } = req.body;
 
-router.post('/', (req, res, next) => {
-  const plainPassword = req.body.password;
-  const hashed = bcryptjs.hashSync(plainPassword, salt)
-  // console.log('valeurs', req.body)
-  // enregistrer notre user en base
-  const $pwd = req.body.password;
-  const $pwdConfirm = req.body.confirmPassword;
-  if($pwd != $pwdConfirm) {
-    res.render('auth/signup', {
-      errorMessage: "Confirmation password does not match!"
-    })
-    return;
-  }else  {
-    const { firstname, lastname, service, role, email, passwordHash } = req.body;
-    User.create({
-      firstname: firstname,
-      lastname: lastname,
-      service: service,
-      role: role,
-      email: email,
-      passwordHash: hashed
-    }).then(userFromDb => {
-      res.redirect('/login')
-    }).catch(err => {
-      console.log('💥', err);
-    // new mongoose.Error.ValidationError()
-    if (err instanceof mongoose.Error.ValidationError || err.code === 11000) {
-      // re-afficher le formulaire
-
-      console.log('Error de validation mongoose !')
-
-      res.render('auth/signup', {
-        errorMessage: err.message
-      })
-    } else {
-      next(err) // hotline
-    }
-   })
+  let errors = [];
+  const result = validationResult(req);
+  if (req.body.password != req.body.confirmPassword) {
+    errors.push('password and confirm password fields are not identical.')
   }
-})
+  if (!result.isEmpty() || errors.length > 0) {
+    res.render('auth/signup', {
+      errors: errors.concat(result.errors.map(e => e.msg))
+    })
+  } else {
+    const isUserExist = await User.findOne({email: req.body.email})
+    if(isUserExist) {
+      errors.push('a user already exist with that email address.')
+      res.render('auth/signup', {errors});
+    } else {
+      const passwordHash = bcryptjs.hashSync(req.body.password, 10);    
+      User.create({firstname, lastname, service, role, email, passwordHash})
+        .then(userFromDb => res.redirect('/login'))
+        .catch(err => {
+          errors.push(err.message)
+          res.render('auth/signup', {errors});
+        });
+    }
 
+  }
+  
+
+})
 
 module.exports = router;
 

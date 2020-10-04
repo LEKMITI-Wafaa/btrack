@@ -5,9 +5,9 @@
     <p>B-Track is your favorite tool to manage your bugs</p>
   </div>
 
-  {{#if errorMessage}}
-  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
-  {{/if}}
+ {{#each errors}}
+  <div class="alert alert-danger" role="alert">{{this}}</div>
+  {{/each}}
 
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -21,7 +21,7 @@
   </div>
   <div class="form-group">
     <label for="inputEmail">Email adress</label>
-    <input type="email" class="form-control" id="inputEmail" placeholder="example@example.com">
+    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="example@example.com">
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
