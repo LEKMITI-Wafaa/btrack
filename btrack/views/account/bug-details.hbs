@@ -1,0 +1,11 @@
+<h1>{{bug.title}}</h1>
+<h3>{{bug.rapporter.firstname}}</h3>
+<p>{{bug.description}}</p>
+<ul>
+  {{#each bug.solutions}}
+    <li>
+      <h3>{{bug}}</h3>
+      {{!-- <p>{{bug.solutions}}</p> --}}
+    </li>
+  {{/each}}
+</ul>
