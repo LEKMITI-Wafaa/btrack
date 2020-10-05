@@ -8,11 +8,16 @@ const router = express.Router();
 
 
 router.get("/", (req, res, next) => {
+  if (req.session.user) {
     Service.find({})
     .then(servicesFromDB => {
       res.render("account/new-bug", {servicesFromDB})
     })
     .catch((err) => next(err))
+  }else {
+    res.render('auth/login')
+  }    
+    
       
 });
 

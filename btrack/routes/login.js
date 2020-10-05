@@ -32,8 +32,7 @@ router.post('/', (req, res, next) => {
       // comparer le password fourni avec le password (hashé) en base
       if (bcryptjs.compareSync(password, user.passwordHash)) {
         console.log('user ok', user)
-
-        //   req.session.user = user;
+        req.session.user = user;
 
         res.redirect('/dashboard')
       } else {

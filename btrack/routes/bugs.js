@@ -8,9 +8,12 @@ const router = express.Router();
 
 
 router.get("/", (req, res, next) => {
-  res.render('account/bugs')
-      
-  });
+  if (req.session.user) {
+    res.render('account/bugs')
+  }else {
+    res.render('auth/login')
+  }    
+});
 
 
 
