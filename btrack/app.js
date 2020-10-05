@@ -57,8 +57,6 @@ const signup= require('./routes/signup');
 app.use('/signup', signup);
 const dashboard = require('./routes/dashboard');
 app.use('/dashboard', dashboard);
-const bugs = require('./routes/bugs');
-app.use('/bugs', bugs);
 const newBug = require('./routes/new-bug');
 app.use('/new-bug', newBug);
 const recentBugs = require('./routes/recent-bugs');

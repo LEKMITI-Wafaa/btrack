@@ -9,7 +9,7 @@ router.get('/', (req, res, next) =>{
   Bug.find({})
   .populate('rapporter')
   .then(allBugsFromDB => {
-    res.render('account/dashboard', {allBugsFromDB})
+    res.render('account/dashboard1', {allBugsFromDB})
   })
 
 } )
