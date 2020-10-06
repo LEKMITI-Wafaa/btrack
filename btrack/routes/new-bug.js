@@ -12,7 +12,7 @@ router.get("/", (req, res, next) => {
   if (req.session.user) {
     Service.find({})
     .then(servicesFromDB => {
-      res.render("account/new-bug", {servicesFromDB, user})
+      res.render("account/new-bug1", {servicesFromDB, user})
     })
     .catch((err) => next(err))
   }else {
@@ -23,11 +23,11 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-    const { title, rapporter, description, solution, services, status } = req.body;
+    const { title, description, solution, services, status } = req.body;
     console.log(req.body);
     Bug.create({
       title: title,
-      rapporter: rapporter,
+      rapporter: req.session.user.firstname.concat('', req.session.user.lastname),
       description: description,
       solution: solution,
       services: services,
@@ -42,7 +42,7 @@ router.post("/", (req, res, next) => {
 
       console.log('Error de validation mongoose !')
 
-      res.render('account/new-bug', {
+      res.render('account/new-bug1', {
         errorMessage: err.message
       })
     } else {
