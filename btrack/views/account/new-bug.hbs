@@ -8,7 +8,7 @@
       <label>
         rapporter 
         {{!-- A remplir !!!!!--}}
-        <input type="text" name="rapporter" value="{{user.email}}" />
+        <input type="text" name="rapporter" value="{{user._id}}" />
       </label>
       <label>
         Description
@@ -16,11 +16,11 @@
       </label>
       <label>
         Solution
-        <input type="text"  name="solution" placeholder="the solution" />
+        <input type="text"  name="solutions" placeholder="the solution" />
       </label>
       <label>
         Services
-        <select name="service" multiple>
+        <select name="services" multiple>
         {{!-- afficher tous les service dans une boite select --}}
         {{#each servicesFromDB}}
         <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
