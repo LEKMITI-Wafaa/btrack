@@ -15,7 +15,7 @@ if (req.session.user) {
     res.render('account/dashboard', {allBugsFromDB})
   })
 } else {
-  res.render('auth/login')
+  res.redirect('/login')
 }
 
   

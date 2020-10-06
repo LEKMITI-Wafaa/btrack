@@ -11,7 +11,7 @@ router.get("/", (req, res, next) => {
   if (req.session.user) {
     res.render('account/bugs')
   }else {
-    res.render('auth/login')
+    res.redirect('/login')
   }    
 });
 

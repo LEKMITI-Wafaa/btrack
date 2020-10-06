@@ -8,14 +8,15 @@ const router = express.Router();
 
 
 router.get("/", (req, res, next) => {
+  let user = req.session.user;
   if (req.session.user) {
     Service.find({})
     .then(servicesFromDB => {
-      res.render("account/new-bug", {servicesFromDB})
+      res.render("account/new-bug", {servicesFromDB, user})
     })
     .catch((err) => next(err))
   }else {
-    res.render('auth/login')
+    res.redirect('/login')
   }    
     
       
@@ -58,3 +59,4 @@ router.post("/", (req, res, next) => {
 
 
 module.exports = router;
+
