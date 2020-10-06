@@ -63,7 +63,8 @@ app.use(session({
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
+const bugs = require('./routes/bugs');
+app.use('/bugs', bugs);
 const index = require('./routes/index');
 app.use('/', index);
 const login= require('./routes/login');
@@ -72,8 +73,6 @@ const signup= require('./routes/signup');
 app.use('/signup', signup);
 const dashboard = require('./routes/dashboard');
 app.use('/dashboard', dashboard);
-const bugs = require('./routes/bugs');
-app.use('/bugs', bugs);
 const newBug = require('./routes/new-bug');
 app.use('/new-bug', newBug);
 const recentBugs = require('./routes/recent-bugs');

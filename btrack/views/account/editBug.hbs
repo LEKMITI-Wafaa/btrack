@@ -1,0 +1,34 @@
+<div><h2>New instance</h2></div>
+<form action="/dashboard/{{bugToEdit.id}}" method="POST">
+  
+  <label>
+    Name 
+    {{!-- A remplir !!!!!--}}
+    
+    <input type="text" name="name" value="5f7854687410bb1eec617a3f" />
+  </label>
+  <label>
+    Solution
+    <input type="text"  name="solution" placeholder="the solution" />
+  </label>
+  <label>
+    Services
+    <select name="service" multiple>
+    {{!-- afficher tous les service dans une boite select --}}
+    {{#each servicesFromDB}}
+    <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
+    {{/each}}
+    </select>
+    
+  </label>
+
+  <div>
+    Status :
+    <label>Approved </label> <input type="radio" name="status" value="Approved" />
+      <label>Not approved </label> <input type="radio" name="status" value="Not approved" />
+    
+  </div>
+  
+
+  <button>Save</button>
+</form>
