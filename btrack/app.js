@@ -12,9 +12,12 @@ const session = require('express-session');
 
 
 mongoose
-  .connect('mongodb://localhost/btrack', {useNewUrlParser: true})
+  .connect('mongodb://localhost/btrack', {
+    useNewUrlParser: true,
+    createIndex: true
+  })
   .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+    console.log(`Connectedd to Mongo! Database name: "${x.connections[0].name}"`)
   })
   .catch(err => {
     console.error('Error connecting to mongo', err)
@@ -55,7 +58,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      expires: 900000
+      expires: 1000000
   }
 }));
 
@@ -63,8 +66,6 @@ app.use(session({
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-const bugs = require('./routes/bugs');
-app.use('/bugs', bugs);
 const index = require('./routes/index');
 app.use('/', index);
 const login= require('./routes/login');
