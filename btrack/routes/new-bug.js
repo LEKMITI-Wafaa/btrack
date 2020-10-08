@@ -9,47 +9,36 @@ const router = express.Router();
 
 router.get("/", (req, res, next) => {
   let user = req.session.user;
+  console.log(user);
   if (req.session.user) {
     Service.find({})
-    .then(servicesFromDB => {
-      res.render("account/new-bug1", {servicesFromDB, user})
-    })
-    .catch((err) => next(err))
-  }else {
+      .then(servicesFromDB => {
+        res.render("account/new-bug", { servicesFromDB, user })
+      })
+      .catch((err) => next(err))
+  } else {
     res.redirect('/login')
-  }    
-    
-      
+  }
+
+
 });
 
 router.post("/", (req, res, next) => {
-    const { title, description, solution, services, status } = req.body;
-    console.log(req.body);
+  const { title, description, solution, services, status } = req.body;
+  if (req.session.user) {
     Bug.create({
-      title: title,
-      rapporter: req.session.user.firstname.concat('', req.session.user.lastname),
-      description: description,
-      solution: solution,
-      services: services,
-      status: status
+      title, description, services, status,
+      rapporter: req.session.user._id,
+      solutions: [{user_id:  req.session.user._id, solution}]
     }).then(bugsFromDb => {
-      res.send("bug created")
+      res.redirect("/dashboard")
     }).catch(err => {
       console.log('💥', err);
-    // new mongoose.Error.ValidationError()
-    if (err instanceof mongoose.Error.ValidationError || err.code === 11000) {
-      // re-afficher le formulaire
-
-      console.log('Error de validation mongoose !')
-
-      res.render('account/new-bug1', {
-        errorMessage: err.message
-      })
-    } else {
-        next(err) // hotline
-    }
-     })
-
+      next(err)
+    })
+  } else {
+    req.redirect('/login')
+  }
 })
 
 

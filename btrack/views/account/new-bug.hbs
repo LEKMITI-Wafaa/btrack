@@ -1,49 +1,64 @@
-<div id="new-bug">
-  <h2>New Bug</h2>
-  <form action="/new-bug" method="POST">
-      <label>
-        title
-        <input type="text" name="title" placeholder="" />
-      </label>
-      <label>
-        rapporter 
-        {{!-- A remplir !!!!!--}}
-        <input type="text" name="rapporter" value="{{user._id}}" />
-      </label>
-      <label>
-        Description
-       <input type="text"  name="description" placeholder="Your description" />
-      </label>
-      {{!-- <label>
-        Solution
-        <input type="text"  name="solutions" placeholder="the solution" />
-      </label> --}}
-      <label>
-        Services
-        <select name="services" multiple>
-        {{!-- afficher tous les service dans une boite select --}}
-        {{#each servicesFromDB}}
-        <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
-        {{/each}}
-        </select>
-       
-      </label>
+<form class="container w-75" action="/new-bug" method="POST">
 
-      <div>
-        Status :
-        <label>Approved </label> <input type="radio" name="status" value="Approved" />
-         <label>Not approved </label> <input type="radio" name="status" value="Not approved" />
-        
-      </div>
-      
+  <div class="form-group row mt-5">
+    <h3 class="col-sm-2 col-form-label ">New Bug</h3>
+    <div class="col-sm-10 mt-1">
+      <p>Fill all the fields then click on Add in order to create a new bug.</p>
+    </div>
+  </div>
 
-      <button>Save</button>
-      {{!-- <button type="reset">Cancel</button> --}}
+  <div class="form-group row mt-5">
+    <label for="title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input id="title" type="text" name="title" class="form-control" placeholder="Ex: Error when...">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="rapporter" class="col-sm-2 col-form-label">Rapporter</label>
+    <div class="col-sm-10">
+      <input id="rapporter" readonly type="text" name="rapporter" value="{{user.firstname}} {{user.lastname}}"
+        class="form-control">
+    </div>
+  </div>
 
-      {{!-- error message will be added here --}}
-      {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-      {{/if}}
-  </form>
 
-</div>
+
+  <div class="form-group row">
+    <label for="des" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+      <textarea id="des" placeholder="Ex: This error occur when..." type="text" name="description" rows="3"
+        class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="sol" class="col-sm-2 col-form-label">Solution</label>
+    <div class="col-sm-10">
+      <textarea id="sol" type="text" name="solution" rows="3" class="form-control"
+        placeholder="Ex: Some solution..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Services</label>
+    {{#each servicesFromDB}}
+
+
+    <div class="form-check form-check-inline">
+      <input class="ml-3 form-check-input" name="services" type="checkbox" value="{{id}}" id="{{id}}">
+      <label class="form-check-label" for="{{id}}">{{name}}</label>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Status</label>
+    <div class="col-sm-10">
+      <input type="radio" name="status" checked value="Approved" /><label>Approved </label>
+      <input class="ml-3" type="radio" name="status" value="Not approved" /> <label>Not approved </label> </div>
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Add</button>
+  <button type="reset" class="btn btn-secondary">Reset</button>
+
+</form>
