@@ -10,31 +10,36 @@
   </thead>
   <tbody>
     {{#each allServicesFromDB}}
-      <tr>
-        <th scope="row">{{name}}</th>
-        <td>{{phone}} </td>
-        <td>{{email}}</td>
-        <td>
-          <button class="btn btn-danger"><a class="btn btn-danger" href="/services/{{id}}/delete">Remove</a></button>
-          <button class="btn btn-light"><a class="btn btn-light" href="/services/{{id}}/edit">Edit</a></button>
-        </td>
-      </tr>
+    <tr>
+      <th scope="row">{{name}}</th>
+      <td>{{phone}} </td>
+      <td>{{email}}</td>
+      <td>
+        <button class="btn btn-danger"><a class="btn btn-danger" href="/services/{{id}}/delete">Remove</a></button>
+        <button class="btn btn-light"><a class="btn btn-light" href="/services/{{id}}/edit">Edit</a></button>
+      </td>
+    </tr>
     {{/each}}
-    <form action="/services" method="post"></form>
+    <form action="/services" method="POST">
       <tr>
         <div class="input-group input-group-lg"></div>
-          <th scope="row"><input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="name" placeholder="Service Name" /></th>            
+        <th scope="row"><input type="text" class="form-control" aria-label="Large"
+            aria-describedby="inputGroup-sizing-sm" name="name" placeholder="Service Name" /></th>
         </div>
         <td>
           <div class="input-group input-group-lg"></div>
-            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="phone" placeholder="Phone" /></td>
-          </div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+            name="phone" placeholder="Phone" />
+        </td>
+        </div>
         <td>
-          <div class="input-group input-group-lg"></div>  
-            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="email" placeholder="Mail" /></td>
-          </div>
+          <div class="input-group input-group-lg"></div>
+          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+            name="email" placeholder="Mail" />
+        </td>
+        </div>
         <td>
-          <button class="btn btn-primary"><a class="btn btn-primary" href="">Add new</a></button>
+          <button type="submit" class="btn btn-primary">Add</button>
         </td>
       </tr>
     </form>

@@ -15,12 +15,13 @@ router.get("/", (req, res, next) =>{
 
 
 router.post("/", (req, res, next) => {
+    console.log(req.body)
     if (req.session.user) {
         const {name, phone, email} = req.body;
         Service.create({name, phone, email})
         .then(servicesFromDB =>{res.redirect('/services')})
         .catch(err => next(err))
-    }else {res.redirect('/login')}              
+    } else {res.redirect('/login')}              
 });
 
 
