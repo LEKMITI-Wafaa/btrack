@@ -87,6 +87,7 @@ router.get('/:bugid', (req, res, next) =>{
   } 
 })
 
+// route d'affichege de la dashboard:
 router.get('/', (req, res, next) =>{
 if (req.session.user) { 
   Bug.find({})
