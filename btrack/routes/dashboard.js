@@ -21,7 +21,7 @@ const Service= require('../models/Services.model.js');
 
 // })
 
-
+// route vers la formulaire de de mise à jours du bug:
 router.get('/:id/editBug', (req, res, next) =>{
   let user = req.session.user;
   if (req.session.user) {
@@ -38,7 +38,7 @@ router.get('/:id/editBug', (req, res, next) =>{
       res.redirect('/login')
     }        
 })
-
+// route de traitement du formulaire de bug: ajout d'instance
 router.post("/:id", (req, res, next) => {
   let user = req.session.user;
   if (req.session.user) {  
@@ -48,15 +48,18 @@ router.post("/:id", (req, res, next) => {
       {$push:{solutions:solution},
       services: services,
       status: status
-    }, {new: true}).then(bugsFromDb => {
-      res.send("bug created")
+    }, {new: true})
+    .populate('services')
+    .populate('rapporter')
+    .populate('solutions.user_id')
+    .then(bug => {res.render('account/bug-details', {bug, user})
     }).catch(err => {
       console.log('💥', err);
     // new mongoose.Error.ValidationError()
     if (err instanceof mongoose.Error.ValidationError || err.code === 11000) {
       // re-afficher le formulaire
       console.log('Error de validation mongoose !')
-      res.render('account/new-bug', {
+      res.render('account/editBug', {
         errorMessage: err.message
       })
     } else {
@@ -77,7 +80,7 @@ router.get('/:bugid', (req, res, next) =>{
       .populate('services')
       .populate('rapporter')
       .populate('solutions.user_id')
-      .then((bug) => res.render('account/bug-details', {bug}))
+      .then((bug) => res.render('account/bug-details', {bug, user}))
       .catch(err => next(err))
   }else {
     res.redirect('/login')
@@ -94,4 +97,12 @@ if (req.session.user) {
 } else {res.redirect('/login')}
 })
 
+
+router.post('/:id/delete', (req, res, next) => {
+  Bug.findByIdAndDelete(req.params.id)
+  .then(() => {
+      res.redirect('/dashboard')
+  })
+  .catch(err => next(err))
+})
 module.exports = router;

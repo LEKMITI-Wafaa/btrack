@@ -33,7 +33,10 @@
 <ul>
     {{#each allBugsFromDB}}
         <li>
-            Title : {{this.title}}     Rapporter : {{this.rapporter.firstname}}    Status : {{this.status}} <button><a href="/dashboard/{{id}}/editBug">Edit</a></button> <button><a href="/dashboard/{{id}}">Details</a></button><button><a href="">Deleate</a></button>
+            Title : {{this.title}}     Rapporter : {{this.rapporter.firstname}}    Status : {{this.status}} 
+              <button><a href="/dashboard/{{id}}/editBug">Edit</a></button> 
+              <button><a href="/dashboard/{{id}}">Details</a></button>
+              <form action="/dashboard/{{id}}/delete" method="POST"><button>supprimer</button></form>
         </li>
 
     {{/each}}
