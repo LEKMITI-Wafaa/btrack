@@ -44,10 +44,9 @@
     <label class="col-sm-2 col-form-label">Services</label>
     {{#each servicesFromDB}}
 
-
     <div class="form-check form-check-inline">
-      <input class="ml-3 form-check-input" name="services" type="checkbox" value="{{id}}" id="{{id}}">
-      <label class="form-check-label" for="{{id}}">{{name}}</label>
+      <input class="ml-3 form-check-input" name="services" type="checkbox" value="{{_id}}" id="{{name}}">
+      <label class="form-check-label" for="{{name}}">{{name}}</label>
     </div>
     {{/each}}
   </div>

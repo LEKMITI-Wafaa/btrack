@@ -12,6 +12,7 @@ router.get("/", (req, res, next) => {
   console.log(user);
   if (req.session.user) {
     Service.find({})
+      .lean()
       .then(servicesFromDB => {
         res.render("account/new-bug", { servicesFromDB, user })
       })
@@ -29,7 +30,7 @@ router.post("/", (req, res, next) => {
     Bug.create({
       title, description, services, status,
       rapporter: req.session.user._id,
-      solutions: [{user_id:  req.session.user._id, solution}]
+      solutions: [{ user_id: req.session.user._id, solution }]
     }).then(bugsFromDb => {
       res.redirect("/dashboard")
     }).catch(err => {
