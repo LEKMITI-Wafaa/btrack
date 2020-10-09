@@ -13,14 +13,15 @@
   </thead>
   <tbody>
     {{#each allServicesFromDB}}
+    
     <tr>
       <th scope="row">{{name}}</th>
       <td>{{phone}} </td>
       <td>{{email}}</td>
       <td>
-        <a href="/services/{{id}}/delete"> <button class="btn btn-danger">Remove</button></a>
+        <a href="/services/{{_id}}/delete"> <button class="btn btn-danger">Remove</button></a>
         <button onclick="editService()" class="ml-2 btn btn-light" data-toggle="modal" data-target="#editModal"
-          data-id="{{id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
+          data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
       </td>
     </tr>
     {{/each}}

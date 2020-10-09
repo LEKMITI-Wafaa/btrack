@@ -1,14 +1,16 @@
 require('dotenv').config();
 
-const bodyParser   = require('body-parser');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
-const mongoose     = require('mongoose');
-const logger       = require('morgan');
-const path         = require('path');
+const express = require('express');
+const favicon = require('serve-favicon');
+const hbs = require('hbs');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const path = require('path');
 const session = require('express-session');
+const exphbs = require('express-handlebars');
+
 
 
 mongoose
@@ -37,16 +39,20 @@ app.use(cookieParser());
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({
-  src:  path.join(__dirname, 'public'),
+  src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   sourceMap: true
 }));
 
-
-      
-
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+
+app.engine('handlebars', exphbs({
+  layoutsDir: path.join(__dirname, 'views'),
+  defaultLayout: 'layout'
+}));
+app.set('view engine', 'handlebars');
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
@@ -58,7 +64,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-      expires: 1000000
+    expires: 1000000
   }
 }));
 
@@ -68,9 +74,9 @@ app.use(session({
 app.locals.title = 'Express - Generated with IronGenerator';
 const index = require('./routes/index');
 app.use('/', index);
-const login= require('./routes/login');
+const login = require('./routes/login');
 app.use('/login', login);
-const signup= require('./routes/signup');
+const signup = require('./routes/signup');
 app.use('/signup', signup);
 const dashboard = require('./routes/dashboard');
 app.use('/dashboard', dashboard);

@@ -11,7 +11,11 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
     if (req.session.user) {
         Service.find({})
-            .then(allServicesFromDB => { res.render('account/services', { allServicesFromDB }) })
+            .lean()
+            .then(allServicesFromDB => {
+                console.log(allServicesFromDB)
+                res.render('account/services', { allServicesFromDB })
+            })
             .catch(err => next(err))
     } else { res.redirect('/login') }
 })
@@ -59,6 +63,7 @@ router.post('/:id/edit', (req, res, next) => {
             .catch(err => next(err))
     } else { res.redirect('/login') }
 })
+
 
 
 module.exports = router;

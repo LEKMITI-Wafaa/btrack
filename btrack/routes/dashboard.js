@@ -92,6 +92,7 @@ router.get('/', (req, res, next) =>{
 if (req.session.user) { 
   Bug.find({})
   .populate('rapporter')
+  .lean()
   .then(allBugsFromDB => {
     res.render('account/dashboard', {allBugsFromDB})
   })
