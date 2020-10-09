@@ -1,56 +1,59 @@
 {{>header}}
 
-{{#each errors}}
-<div class="alert alert-danger" role="alert">{{this}}</div>
-{{/each}}
-<h2>Services List</h2>
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Phone</th>
-      <th scope="col">E-mail</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each allServicesFromDB}}
-    
-    <tr>
-      <th scope="row">{{name}}</th>
-      <td>{{phone}} </td>
-      <td>{{email}}</td>
-      <td>
-        <a href="/services/{{_id}}/delete"> <button class="btn btn-danger">Remove</button></a>
-        <button onclick="editService()" class="ml-2 btn btn-light" data-toggle="modal" data-target="#editModal"
-          data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
-      </td>
-    </tr>
-    {{/each}}
-    <form action="/services" method="POST">
+<div class="container-fluid">
+{{>sidebar}}
+
+  {{#each errors}}
+  <div class="alert alert-danger" role="alert">{{this}}</div>
+  {{/each}}
+  <h2>Services List</h2>
+  <table class="table">
+    <thead class="thead-dark">
       <tr>
-        <div class="input-group input-group-lg"></div>
-        <th scope="row"><input type="text" class="form-control" aria-label="Large"
-            aria-describedby="inputGroup-sizing-sm" name="name" placeholder="Service Name" /></th>
-        </div>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each allServicesFromDB}}
+
+      <tr>
+        <th scope="row">{{name}}</th>
+        <td>{{phone}} </td>
+        <td>{{email}}</td>
         <td>
-          <div class="input-group input-group-lg"></div>
-          <input type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-            name="phone" placeholder="Phone" />
-        </td>
-        </div>
-        <td>
-          <div class="input-group input-group-lg"></div>
-          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-            name="email" placeholder="Mail" />
-        </td>
-        </div>
-        <td>
-          <button type="submit" class="btn btn-primary">Add</button>
+          <a href="/services/{{_id}}/delete"> <button class="btn btn-danger">Remove</button></a>
+          <button onclick="editService()" class="ml-2 btn btn-light" data-toggle="modal" data-target="#editModal"
+            data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
         </td>
       </tr>
-    </form>
-  </tbody>
+      {{/each}}
+      <form action="/services" method="POST">
+        <tr>
+          <div class="input-group input-group-lg"></div>
+          <th scope="row"><input type="text" class="form-control" aria-label="Large"
+              aria-describedby="inputGroup-sizing-sm" name="name" placeholder="Service Name" /></th>
+</div>
+<td>
+  <div class="input-group input-group-lg"></div>
+  <input type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="phone"
+    placeholder="Phone" />
+</td>
+</div>
+<td>
+  <div class="input-group input-group-lg"></div>
+  <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="email"
+    placeholder="Mail" />
+</td>
+</div>
+<td>
+  <button type="submit" class="btn btn-primary">Add</button>
+</td>
+</tr>
+</form>
+</tbody>
 </table>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -66,22 +69,22 @@
         {{#each errors}}
         <div class="alert alert-danger" role="alert">{{this}}</div>
         {{/each}}
-        <form id="popup-edit-from"action="/services/edit" method="POST">
+        <form id="popup-edit-from" action="/services/edit" method="POST">
           <div class="form-group">
             <label for="popup-service-name" class="col-form-label">Name:</label>
-            <input id="popup-service-name" name ="name" type="text" class="form-control">
+            <input id="popup-service-name" name="name" type="text" class="form-control">
           </div>
 
           <div class="form-group">
             <label for="popup-service-phone" class="col-form-label">Phone:</label>
-            <input type="number" id="popup-service-phone"  name="phone" type="text" class="form-control">
+            <input type="number" id="popup-service-phone" name="phone" type="text" class="form-control">
           </div>
 
           <div class="form-group">
             <label for="popup-service-email" class="col-form-label">Email:</label>
             <input id="popup-service-email" name="email" type="text" class="form-control">
           </div>
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -89,18 +92,17 @@
       </div>
       </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"></script>
+  </div>
 
-    <script>
 
-      function editService() {
-        document.getElementById("popup-service-name").value = event.target.dataset.name;
-        document.getElementById("popup-service-phone").value = event.target.dataset.phone;
-        document.getElementById("popup-service-email").value = event.target.dataset.email;
-        document.getElementById("popup-edit-from").action = '/services/' + event.target.dataset.id + '/edit';
-        
-      }
+  <script>
 
-    </script>
+    function editService() {
+      document.getElementById("popup-service-name").value = event.target.dataset.name;
+      document.getElementById("popup-service-phone").value = event.target.dataset.phone;
+      document.getElementById("popup-service-email").value = event.target.dataset.email;
+      document.getElementById("popup-edit-from").action = '/services/' + event.target.dataset.id + '/edit';
+
+    }
+
+  </script>
