@@ -19,9 +19,7 @@ router.get("/", (req, res, next) => {
 router.post('/', [
     body('name', 'Serice name must have at least 3 chars.').isLength({ min: 3 }),
     body('email', 'Email is not valid.').isEmail(),
-    check('phone')
-        .isLength({ min: 10 }).withMessage('Service phone must be at least 10 digits long.')
-        .isNumeric().withMessage('Service phone must contains numbers only.')
+    check('phone').isLength({ min: 10, max: 10 }).withMessage('Service phone must be of 10 digits long.')
 ], async (req, res, next) => {
     if (req.session.user) {
         const { name, phone, email } = req.body;
@@ -37,7 +35,7 @@ router.post('/', [
                     .then(serviceFromDB => res.redirect('/services'))
                     .catch(err => next(err));
             }
-        } else {res.render('account/services', { allServicesFromDB, errors: result.errors.map(e => e.msg) })}
+        } else { res.render('account/services', { allServicesFromDB, errors: result.errors.map(e => e.msg) }) }
     } else { res.redirect('/login') }
 })
 
@@ -53,15 +51,14 @@ router.get('/:id/delete', (req, res, next) => {
     } else { res.redirect('/login') }
 })
 
-router.get('/:id/edit', (req, res, next) => {
-    Service.findByIdAndUpdate(req.params.id)
-        .then(() => {
-            res.redirect('/services')
-        })
-        .catch(err => next(err))
+router.post('/:id/edit', (req, res, next) => {
+    if (req.session.user) {
+        const { name, phone, email } = req.body;
+        Service.findByIdAndUpdate(req.params.id, { name, phone, email }, { new: true })
+            .then(() => { res.redirect('/services') })
+            .catch(err => next(err))
+    } else { res.redirect('/login') }
 })
-
-
 
 
 module.exports = router;

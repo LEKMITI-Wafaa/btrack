@@ -19,8 +19,8 @@
       <td>{{email}}</td>
       <td>
         <a href="/services/{{id}}/delete"> <button class="btn btn-danger">Remove</button></a>
-        <button class="ml-2 btn btn-light" data-toggle="modal" data-target="#editModal"
-          data-whatever="@getbootstrap">Edit</button>
+        <button onclick="editService()" class="ml-2 btn btn-light" data-toggle="modal" data-target="#editModal"
+          data-id="{{id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
       </td>
     </tr>
     {{/each}}
@@ -32,7 +32,7 @@
         </div>
         <td>
           <div class="input-group input-group-lg"></div>
-          <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+          <input type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
             name="phone" placeholder="Phone" />
         </td>
         </div>
@@ -49,3 +49,55 @@
     </form>
   </tbody>
 </table>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Service</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{#each errors}}
+        <div class="alert alert-danger" role="alert">{{this}}</div>
+        {{/each}}
+        <form id="popup-edit-from"action="/services/edit" method="POST">
+          <div class="form-group">
+            <label for="popup-service-name" class="col-form-label">Name:</label>
+            <input id="popup-service-name" name ="name" type="text" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="popup-service-phone" class="col-form-label">Phone:</label>
+            <input type="number" id="popup-service-phone"  name="phone" type="text" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="popup-service-email" class="col-form-label">Email:</label>
+            <input id="popup-service-email" name="email" type="text" class="form-control">
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+
+    <script>
+
+      function editService() {
+        document.getElementById("popup-service-name").value = event.target.dataset.name;
+        document.getElementById("popup-service-phone").value = event.target.dataset.phone;
+        document.getElementById("popup-service-email").value = event.target.dataset.email;
+        document.getElementById("popup-edit-from").action = '/services/' + event.target.dataset.id + '/edit';
+        
+      }
+
+    </script>
