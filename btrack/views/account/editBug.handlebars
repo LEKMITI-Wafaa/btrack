@@ -1,43 +1,49 @@
-<div><h2>New instance</h2></div>
-<h1>{{toEdit.title}}</h1>
-<h3>Rapporter par: {{toEdit.rapporter.firstname}} {{toEdit.rapporter.lastname}} </h3>
-<p>Description: {{toEdit.description}}</p>
-{{#each toEdit.solutions}}
+{{>header}}
+<div class="container-fluid">
+  {{>sidebar}}
+  <div>
+    <h2>New instance</h2>
+  </div>
+  <h1>{{toEdit.title}}</h1>
+  <h3>Rapporter par: {{toEdit.rapporter.firstname}} {{toEdit.rapporter.lastname}} </h3>
+  <p>Description: {{toEdit.description}}</p>
+  {{#each toEdit.solutions}}
   <h2>User: {{user_id.firstname}}</h2>
   <p>{{solution}}</p>
-{{/each}}
-{{>header}}
+  {{/each}}
 
-<form action="/dashboard/{{toEdit.id}}" method="POST">
+  <form action="/dashboard/{{toEdit.id}}" method="POST">
 
-  
-  <label>
-    Name 
-    {{!-- A remplir !!!!!--}}
-    
-    <input type="text" name="user_id" value="{{user._id}}" />
-  </label>
-  <label>
-    Solution
-    <input type="text"  name="solution" placeholder="the solution" />
-  </label>
-  <label>
-    Services
-    <select name="services" multiple>
-    {{!-- afficher tous les service dans une boite select --}}
-    {{#each servicesFromDB}}
-      <option value="{{id}}">{{name}}</option>
-    {{/each}}
-    </select>
-  </label>
 
-  <div>
-    Status :
+    <label>
+      Name
+      {{!-- A remplir !!!!!--}}
+
+      <input type="text" name="user_id" value="{{user._id}}" />
+    </label>
+    <label>
+      Solution
+      <input type="text" name="solution" placeholder="the solution" />
+    </label>
+    <label>
+      Services
+      <select name="services" multiple>
+        {{!-- afficher tous les service dans une boite select --}}
+        {{#each servicesFromDB}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </label>
+
+    <div>
+      Status :
       <label>Approved </label> <input type="radio" name="status" value="Approved" />
       <label>Not approved </label> <input type="radio" name="status" value="Not approved" />
-    
-  </div>
-  
 
-  <button>Save</button>
-</form>
+    </div>
+
+
+    <button>Save</button>
+  </form>
+</div>
+{{>footer}}

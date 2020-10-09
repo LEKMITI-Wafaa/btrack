@@ -1,17 +1,23 @@
 {{<header}}
-<h1>{{bug.title}}</h1>
-<h3>Rapporter: {{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</h3>
-<p>{{bug.description}}</p>
-<ul>
-  {{#each bug.services}}
+<div class="container-fluid">
+  {{>sidebar}}
+  <h1>{{bug.title}}</h1>
+  <h3>Rapporter: {{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</h3>
+  <p>{{bug.description}}</p>
+  <ul>
+    {{#each bug.services}}
     <li>
       <h3>{{name}}</h3>
       {{!-- <p>{{bug.solutions}}</p> --}}
     </li>
-  {{/each}}
-</ul>
-{{#each bug.solutions}}
+    {{/each}}
+  </ul>
+  {{#each bug.solutions}}
   <h2>Intervenant: {{user_id.firstname}} {{user_id.lastname}}</h2>
-  <h4>Solution:</h4><p>{{solution}}</p>
-{{/each}}
-<h3>{{bug.status}}</h3>
+  <h4>Solution:</h4>
+  <p>{{solution}}</p>
+  {{/each}}
+  <h3>{{bug.status}}</h3>
+</div>
+
+{{>footer}}
