@@ -48,7 +48,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('handlebars', exphbs({
   layoutsDir: path.join(__dirname, 'views'),
-  defaultLayout: 'layout'
+  defaultLayout: 'layout',
+  partialsDir: path.join(__dirname, 'views/partials'),
 }));
 app.set('view engine', 'handlebars');
 
