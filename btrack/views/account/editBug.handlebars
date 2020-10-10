@@ -4,22 +4,22 @@
   <div>
     <h2>New instance</h2>
   </div>
-  <h1>{{toEdit.title}}</h1>
-  <h3>Rapporter par: {{toEdit.rapporter.firstname}} {{toEdit.rapporter.lastname}} </h3>
-  <p>Description: {{toEdit.description}}</p>
-  {{#each toEdit.solutions}}
+  <h1>{{bug.title}}</h1>
+  <h3>Rapporter par: {{bug.rapporter.firstname}} {{bug.rapporter.lastname}} </h3>
+  <p>Description: {{bug.description}}</p>
+  {{#each bug.solutions}}
   <h2>User: {{user_id.firstname}}</h2>
   <p>{{solution}}</p>
   {{/each}}
 
-  <form action="/dashboard/{{toEdit.id}}" method="POST">
+  <form action="/bugs/{{bug._id}}" method="POST">
 
 
     <label>
       Name
       {{!-- A remplir !!!!!--}}
 
-      <input type="text" name="user_id" value="{{user._id}}" />
+      <input type="text" name="name" value="{{user.firstname}} {{user.lastname}}" />
     </label>
     <label>
       Solution
@@ -43,7 +43,7 @@
     </div>
 
 
-    <button>Save</button>
+    <button type="submit">Save</button>
   </form>
 </div>
 {{>footer}}

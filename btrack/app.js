@@ -79,12 +79,12 @@ const login = require('./routes/login');
 app.use('/login', login);
 const signup = require('./routes/signup');
 app.use('/signup', signup);
+const bugs= require('./routes/bugs');
+app.use('/bugs', bugs);
 const dashboard = require('./routes/dashboard');
 app.use('/dashboard', dashboard);
 const newBug = require('./routes/new-bug');
 app.use('/new-bug', newBug);
-const recentBugs = require('./routes/recent-bugs');
-app.use('/recent-bugs', recentBugs);
 const services = require('./routes/services');
 app.use('/services', services);
 

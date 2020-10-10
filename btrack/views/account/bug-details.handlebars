@@ -1,4 +1,4 @@
-{{<header}}
+{{>header}}
 <div class="container-fluid">
   {{>sidebar}}
   <h1>{{bug.title}}</h1>
@@ -18,6 +18,8 @@
   <p>{{solution}}</p>
   {{/each}}
   <h3>{{bug.status}}</h3>
+  <a href="/bugs/{{bug._id}}/editBug"><button class="ml-2 btn btn-info" >Edit</button></a>
 </div>
+
 
 {{>footer}}
