@@ -10,7 +10,7 @@ const serviceSchema = new Schema(
         title: { type: String },
         rapporter: { type: Schema.Types.ObjectId, ref: 'User' },
         description: { type: String },
-        severty: { type: String },
+        severity: { type: String },
         rapportedAt: { type: Date },
         solutions: [{
             user_id: { type: Schema.Types.ObjectId, ref: 'User' },

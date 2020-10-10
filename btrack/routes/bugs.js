@@ -21,9 +21,7 @@ router.get('/:id/details', (req, res, next) => {
       .populate('services')
       .lean()
       .then(result => {
-        console.log('result',result)
         const sortedSolutions = result.solutions.sort((s1, s2) => s2.date - s1.date) 
-        console.log('res',res)
         const solutions = sortedSolutions.map(s => {
           const solution = {
             ...s, date: {
@@ -40,8 +38,8 @@ router.get('/:id/details', (req, res, next) => {
           },
           solutions
         }
-        console.log('bug', bug)
-        res.render('account/bug-details', { bug, user })
+        res.render('account/bug-details', { bug, user, errors: req.session.errors})
+        req.session.errors = undefined;
       })
 
       .catch(err => next(err))
@@ -53,7 +51,7 @@ router.get('/:id/details', (req, res, next) => {
 router.post("/:id/solution",
   check('solution')
     .notEmpty().withMessage('A solution must not be empty')
-    .isLength({ max: 3000 }).withMessage('A solution must exceed 3000 chars long.')
+    .isLength({ max: 500 }).withMessage('A solution must not exceed 500 chars long.')
   , (req, res, next) => {
     const user = req.session.user;
     const bugId = req.params.id;
@@ -73,7 +71,8 @@ router.post("/:id/solution",
         Bug.findById(bugId)
           .lean()
           .then(bug => {
-            res.render('account/bug-details', { bug, user, errors: esult.errors.map(e => e.msg) })
+            req.session.errors = result.errors.map(e => e.msg);
+            res.redirect('/bugs/' + req.params.id + '/details')
           })
       }
     } else {

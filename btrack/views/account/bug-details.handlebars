@@ -47,6 +47,7 @@
           Bug Storty
         </div>
         <div class="tracking-list mt-1">
+                 
           {{#each bug.solutions}}
           <div class="tracking-item">
                   <div class="tracking-icon status-outfordelivery mt-2">
@@ -59,7 +60,7 @@
                 {{user_id.firstname}}
                 {{user_id.lastname}}</span></div>
             <div class="tracking-content"><span>Status: {{status}}</span> <span>Severity:
-                {{severity.value}}</span>{{solution}}
+                {{severity.value}}</span>>{{solution}}
             </div>
           </div>
 
