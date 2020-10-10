@@ -42,7 +42,7 @@
       <select id="inputService" name="service" class="form-control">
         {{!-- afficher tous les service dans une boite select --}}
         {{#each servicesFromDB}}
-        <option value="{{id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
+        <option value="{{_id}}">{{name}}</option>
         {{/each}}
       </select>
     </div>

@@ -65,7 +65,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    expires: 1000000
+    expires: 10000000
   }
 }));
 
@@ -79,6 +79,8 @@ const login = require('./routes/login');
 app.use('/login', login);
 const signup = require('./routes/signup');
 app.use('/signup', signup);
+const user = require('./routes/user');
+app.use('/user', user);
 const bugs= require('./routes/bugs');
 app.use('/bugs', bugs);
 const dashboard = require('./routes/dashboard');
