@@ -1,25 +1,132 @@
 {{>header}}
 <div class="container-fluid">
   {{>sidebar}}
-  <h1>{{bug.title}}</h1>
-  <h3>Rapporter: {{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</h3>
-  <p>{{bug.description}}</p>
-  <ul>
-    {{#each bug.services}}
-    <li>
-      <h3>{{name}}</h3>
-      {{!-- <p>{{bug.solutions}}</p> --}}
-    </li>
-    {{/each}}
-  </ul>
-  {{#each bug.solutions}}
-  <h2>Intervenant: {{user_id.firstname}} {{user_id.lastname}}</h2>
-  <h4>Solution:</h4>
-  <p>{{solution}}</p>
-  {{/each}}
-  <h3>{{bug.status}}</h3>
-  <a href="/bugs/{{bug._id}}/editBug"><button class="ml-2 btn btn-info" >Edit</button></a>
-</div>
+  <h3>Bug details: </h3>
+  {{>error}}
 
 
-{{>footer}}
+
+
+  <div class="row mt-3 ml-1">
+    <div class="col-7 border p-3 ">
+      <div class="row">
+        <div class="col-6">Title:</div>
+        <div class="col-6">{{bug.title}}</div>
+      </div>
+
+      <div class="row mt-2 ">
+        <div class="col-6">Rapporter:</div>
+        <div class="col-6">{{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6">Services:</div>
+        <div class="col-6"> {{#each bug.services}} {{/each}}</div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6">Status:</div>
+        <h6 class="col-6">{{bug.status}}</h6>
+      </div>
+      <div class="row mt-2">
+        <div class="col-6">Severity:</div>
+        <h6 class="col-6">{{bug.severity}}</h6>
+      </div>
+    </div>
+    <div class="col-5 d-flex justify-content-end align-items-end">
+      <button onclick="addSolution()" class="ml-2 btn btn-primary" data-toggle="modal" data-target="#addSolutionModal"
+        data-id="{{bug._id}}">Add solution</button>
+
+    </div>
+  </div>
+
+
+  <div class="row mt-5">
+    <div class="col-md-12 col-lg-12">
+      <div id="tracking-pre"></div>
+      <div id="tracking">
+        <div class="card text-center bg-light">
+          Bug Storty
+        </div>
+        <div class="tracking-list mt-1">
+          {{#each bug.solutions}}
+          <div class="tracking-item">
+                  <div class="tracking-icon status-outfordelivery mt-2">
+               <svg class="svg-inline--fa fa-shipping-fast fa-w-20" aria-hidden="true" data-prefix="fas" data-icon="shipping-fast" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M624 352h-16V243.9c0-12.7-5.1-24.9-14.1-33.9L494 110.1c-9-9-21.2-14.1-33.9-14.1H416V48c0-26.5-21.5-48-48-48H112C85.5 0 64 21.5 64 48v48H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h272c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H40c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h208c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H8c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8h208c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H64v128c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h48c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zM160 464c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm320 0c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-208H416V144h44.1l99.9 99.9V256z"></path>
+                     </svg>
+              <!-- <i class="fas fa-circle"></i> -->
+            </div>
+            <div class="tracking-date">{{date.rapportDay}}<span>{{date.rapportTime}}</span><span>By
+                {{user_id.firstname}}
+                {{user_id.lastname}}</span></div>
+            <div class="tracking-content"><span>Status: {{status}}</span> <span>Severity:
+                {{severity.value}}</span>{{solution}}
+            </div>
+          </div>
+
+          {{/each}}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addSolutionModal" tabindex="-1" role="dialog" aria-labelledby="addSolutionModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addSolutionModalLabel">Add solution</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="popup-add-solution" method="post">
+              <div class="form-group row">
+                <label for="popup-bug-solution" class="col-form-label col-sm-2">Status:</label>
+                <div class="col-sm-10 mt-2">
+                  <input class="ml-3" type="radio" name="status" checked value="Confirmed" /><label
+                    class="ml-1">Confirmed
+                  </label>
+                  <input class="ml-3" type="radio" name="status" value="In Progress" /><label class="ml-1">InProgress
+                  </label>
+                  <input class="ml-3" type="radio" name="status" value="Resolved" /><label class="ml-1">Resoveld</label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="popup-bug-solution" class="col-form-label col-sm-2">Severity:</label>
+                <div class="col-sm-10 mt-2">
+                  <input class="ml-3" type="radio" name="severity" value="Critical" checked /><label
+                    class="ml-1">Critical </label>
+                  <input class="ml-3" type="radio" name="severity" value="High" /><label class="ml-1">High </label>
+                  <input class="ml-3" type="radio" name="severity" value="Medium" />
+                  <labe class="ml-1" l>Medium </label>
+                    <input class="ml-3" type="radio" name="severity" value="Low" /><label class="ml-1">Low </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="popup-bug-solution" class="col-form-label">Solution:</label>
+                <textarea id="sol" type="text" name="solution" rows="3" class="form-control"
+                  placeholder="Ex: Some solution..."></textarea>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+          </form>
+        </div>
+      </div>
+
+
+
+      {{>footer}}
+
+      <script>
+        function addSolution() {
+          console.log('id', event.target.dataset.id)
+          document.getElementById("popup-add-solution").action = '/bugs/' + event.target.dataset.id + '/solution';
+        }
+      </script>

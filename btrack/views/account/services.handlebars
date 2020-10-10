@@ -7,8 +7,6 @@
   <div class="alert alert-danger" role="alert">{{this}}</div>
   {{/each}}
 
-
-
   <h2>Service list</h2>
   <div class="table-responsive">
     <table class="table table-striped table-sm">
@@ -103,13 +101,10 @@
 
 
   <script>
-
     function editService() {
       document.getElementById("popup-service-name").value = event.target.dataset.name;
       document.getElementById("popup-service-phone").value = event.target.dataset.phone;
       document.getElementById("popup-service-email").value = event.target.dataset.email;
       document.getElementById("popup-edit-from").action = '/services/' + event.target.dataset.id + '/edit';
-
     }
-
   </script>
