@@ -44,20 +44,40 @@ router.post("/:id", (req, res, next) => {
   } 
 })
 
-
+// route d'affichage de detail bug
+// router.get('/:bugid', (req, res, next) =>{
+//   console.log('coucou')
+//   let user = req.session.user;
+//   if (req.session.user) {   
+//     const id = req.params.bugid;
+//       Bug.findOne({_id: id})
+//       .populate('services')
+//       .populate('rapporter')
+//       .populate('solutions.user_id')
+//       .lean()
+//       .then((bug) =>{
+//         console.log(bug) 
+//         res.render('account/bug-details', {bug, user})
+//       })
+      
+//       .catch(err => next(err))
+//   }else {
+//     res.redirect('/login')
+//   } 
+// })
 router.get('/:bugid', (req, res, next) =>{
-    let id = req.params.bugid;
-    if (req.session.user) {
-      Bug.findOne({_id: id})
-      .lean()
-      .populate('services')
-      .populate('rapporter')
-      .populate('user_id')
-      .then((bug) => {
-          res.render('account/bug-details', {
-              bug
-          })
-      })
+  let user = req.session.user;
+    if (req.session.user) {   
+      const id = req.params.bugid;
+        Bug.findOne({_id: id})
+        .populate('services')
+        .populate('rapporter')
+        .populate('solutions.user_id')
+        .lean()
+        .then((bug) =>{
+          console.log(bug) 
+          res.render('account/bug-details', {bug, user})
+        })
       .catch(err => next(err))
     }else {
         res.redirect('/login')
