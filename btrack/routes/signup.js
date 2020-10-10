@@ -11,6 +11,7 @@ const router = express.Router()
 
 router.get("/", (req, res, next) => {
   Service.find({})
+    .lean()
     .then(servicesFromDB => {
       const data = { servicesFromDB }
       res.render("auth/signup", data)

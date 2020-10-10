@@ -6,13 +6,11 @@ const userSchema = new Schema(
   {
     firstname: {
       type: String,
-      trim: true,
-      required: [true, 'Username is required.']
+      trim: true
     },
     lastname: {
       type: String,
-      trim: true,
-      required: [true, 'Username is required.'],
+      trim: true
     },
     service: { type: Schema.Types.ObjectId, ref: 'Service' },
     role: {
