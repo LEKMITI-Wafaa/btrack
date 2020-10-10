@@ -130,6 +130,7 @@ body('services', 'A bug is associated to one service at least.').notEmpty(),
     } else {
       req.redirect('/login')
     }
+
   })
 
 
@@ -150,11 +151,6 @@ body('services', 'A bug is associated to one service at least.').notEmpty(),
 //     res.redirect('/login')
 //   }
 // })
-
-
-
-
-
 
 
 module.exports = router;
