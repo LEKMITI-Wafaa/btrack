@@ -116,7 +116,7 @@ body('services', 'A bug is associated to one service at least.').notEmpty(),
       Bug.create({
         title, description, services, status, severity, rapportedAt: Date.now(),
         rapporter: req.session.user._id,
-        solutions: [{ user_id: req.session.user._id, solution, status, severity: { value: severity, updated: true } }]
+        solutions: [{ user_id: req.session.user._id, solution, status, severity: { value: severity, updated: true }, date: Date.now()}]
       }).then(bugsFromDb => {
         res.redirect("/dashboard")
       }).catch(err => {
