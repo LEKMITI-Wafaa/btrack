@@ -26,9 +26,7 @@ router.post('/', [
   body('email', 'email is not valid').isEmail(),
   check('password')
     .isLength({ min: 8 }).withMessage('password must be at least 8 chars long.')
-    .matches("(?=.*\d*)").withMessage('password must contain at least a number.')
-    .matches("(?=.*[a-z]*)").withMessage('password must contain at least a lowercase char.')
-    .matches("(?=.*[A-Z]*)").withMessage('password must contain at least an uppercase char.')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase ans a lowercase')
 ], async(req, res, next) => {
 
   const { firstname, lastname, service, role, email } = req.body;
