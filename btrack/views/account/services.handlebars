@@ -3,9 +3,7 @@
 <div class="container-fluid">
   {{>sidebar}}
 
-  {{#each errors}}
-  <div class="alert alert-danger" role="alert">{{this}}</div>
-  {{/each}}
+ {{>error}}
 
   <h2>Service list</h2>
   <div class="table-responsive">
