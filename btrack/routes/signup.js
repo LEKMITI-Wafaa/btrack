@@ -2,7 +2,7 @@ const express = require('express')
 const bcryptjs = require('bcryptjs')
 const mongoose = require('mongoose')
 const { body, check, validationResult } = require('express-validator');
-
+const fileUploader = require('../configs/cloudinary.config');
 
 const User = require('../models/User.model.js');
 const Service = require("../models/Services.model.js");
@@ -20,7 +20,7 @@ router.get("/", (req, res, next) => {
 });
 
 
-router.post('/', [
+router.post('/',fileUploader.single('image'), [
   body('firstname', 'first name must have at least 3 chars').isLength({ min: 3 }),
   body('lastname', 'last name must have at least 3 chars').isLength({ min: 3 }),
   body('email', 'email is not valid').isEmail(),
@@ -47,7 +47,7 @@ router.post('/', [
       res.render('auth/signup', {errors});
     } else {
       const passwordHash = bcryptjs.hashSync(req.body.password, 10);    
-      User.create({firstname, lastname, service, role, email, passwordHash})
+      User.create({firstname, lastname, service, role, email, passwordHash, imageURL: req.file.path})
         .then(userFromDb => res.redirect('/login'))
         .catch(err => {
           errors.push(err.message)

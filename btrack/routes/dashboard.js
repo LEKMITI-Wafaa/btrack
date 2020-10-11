@@ -8,12 +8,13 @@ const Service= require('../models/Services.model.js');
 
 // route d'affichege de la dashboard:
 router.get('/', (req, res, next) =>{
+  let user = req.session.user;
 if (req.session.user) { 
   Bug.find({})
   .populate('rapporter')
   .lean()
   .then(allBugsFromDB => {
-    res.render('account/dashboard', {allBugsFromDB})
+    res.render('account/dashboard', {allBugsFromDB, user})
   })
 } else {res.redirect('/login')}
 })
