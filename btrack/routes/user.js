@@ -33,7 +33,7 @@ router.post('/:id/edit', [
 router.post('/:id/edit-password',[
   check('password')
     .isLength({ min: 8 }).withMessage('password must be at least 8 chars long.')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase ans a lowercase')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase and a lowercase')
 ], (req, res, next) =>{
   const result = validationResult(req);
   let errors = [];

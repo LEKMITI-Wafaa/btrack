@@ -26,7 +26,7 @@ router.post('/',fileUploader.single('image'), [
   body('email', 'email is not valid').isEmail(),
   check('password')
     .isLength({ min: 8 }).withMessage('password must be at least 8 chars long.')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase ans a lowercase')
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase and a lowercase')
 ], async(req, res, next) => {
 
   const { firstname, lastname, service, role, email } = req.body;
