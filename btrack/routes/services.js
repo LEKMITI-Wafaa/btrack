@@ -13,7 +13,6 @@ router.get("/", (req, res, next) => {
         Service.find({})
             .lean()
             .then(allServicesFromDB => {
-                console.log(allServicesFromDB)
                 res.render('account/services', { allServicesFromDB, errors: req.session.errors })
                 req.session.errors = undefined
             })
@@ -32,9 +31,16 @@ router.post('/', [
         const { name, phone, email } = req.body;
         const result = validationResult(req);
         if (result.isEmpty()) {
-            const isServiceExist = await Service.find().or([{ name }, { email }, { phone }])
+            const isServiceExist = await Service.findOne({
+                $or: [
+                    { name },
+                    { phone },
+                    { email }
+                ]
+            })
+            console.log('post', isServiceExist)
             if (isServiceExist) {
-                req.session.errors = ['A service already exist with that email or name or phone number.']
+                req.session.errors = ['A service already exist with that email, name or phone number.']
                 res.redirect('/services');
             } else {
                 Service.create({ name, phone, email })
@@ -71,9 +77,15 @@ router.post('/:id/edit', [
         const { name, phone, email } = req.body;
         const result = validationResult(req);
         if (result.isEmpty()) {
-            const isServiceExist = await Service.find().or([{ name }, { email }, {phone}])
+            const isServiceExist = await Service.findOne({
+                $or: [
+                    { name },
+                    { phone },
+                    { email }
+                ]
+            })
             if (isServiceExist) {
-                req.session.errors = ['A service already exist with that email or name.']
+                req.session.errors = ['A service already exist with that email, name or phone number.']
                 res.redirect('/services');
             } else {
                 Service.findByIdAndUpdate(req.params.id, { name, phone, email }, { new: true })
