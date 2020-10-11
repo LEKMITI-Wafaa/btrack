@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const Service = require("../models/Services.model.js");
 
-
+// Connecting to MongodDB
+// Get the address of connection from Environment variable or use the default one
+// Heroku is configured to inject DB_CONNECTION automatically
+// https://dashboard.heroku.com/apps/btrack-wm/settings -> Reveaul Configs Vars
 const DB_NAME = "btrack";
 mongoose.connect(process.env.DB_CONNECTION || `mongodb://localhost/${DB_NAME}`, {
     useCreateIndex: true,

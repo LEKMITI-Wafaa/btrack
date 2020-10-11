@@ -12,7 +12,10 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 
 
-
+// Connecting to MongodDB
+// Get the address of connection from Environment variable or use the default one
+// Heroku is configured to inject DB_CONNECTION automatically
+// https://dashboard.heroku.com/apps/btrack-wm/settings -> Reveaul Configs Vars
 mongoose
   .connect(process.env.DB_CONNECTION || 'mongodb://localhost/btrack', {
     useNewUrlParser: true,
