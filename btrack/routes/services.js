@@ -11,6 +11,7 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
     if (req.session.user) {
         Service.find({})
+            .sort({name:1})
             .lean()
             .then(allServicesFromDB => {
                 res.render('account/services', { allServicesFromDB, errors: req.session.errors })
