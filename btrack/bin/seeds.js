@@ -3,7 +3,7 @@ const Service = require("../models/Services.model.js");
 
 
 const DB_NAME = "btrack";
-mongoose.connect(`mongodb://localhost/${DB_NAME}`, {
+mongoose.connect(process.env.DB_CONNECTION || `mongodb://localhost/${DB_NAME}`, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true 

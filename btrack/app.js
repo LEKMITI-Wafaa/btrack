@@ -14,7 +14,7 @@ const exphbs = require('express-handlebars');
 
 
 mongoose
-  .connect('mongodb://localhost/btrack', {
+  .connect(process.env.DB_CONNECTION || 'mongodb://localhost/btrack', {
     useNewUrlParser: true,
     createIndex: true
   })
