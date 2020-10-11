@@ -42,7 +42,7 @@
             </th>
             <td>
               <div class="input-group input-group-lg"></div>
-              <input type="number" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
                 name="phone" placeholder="Phone" />
             </td>
   </div>
@@ -71,9 +71,6 @@
         </button>
       </div>
       <div class="modal-body">
-        {{#each errors}}
-        <div class="alert alert-danger" role="alert">{{this}}</div>
-        {{/each}}
         <form id="popup-edit-from" action="/services/edit" method="POST">
           <div class="form-group">
             <label for="popup-service-name" class="col-form-label">Name:</label>
@@ -82,7 +79,7 @@
 
           <div class="form-group">
             <label for="popup-service-phone" class="col-form-label">Phone:</label>
-            <input type="number" id="popup-service-phone" name="phone" type="text" class="form-control">
+            <input id="popup-service-phone" name="phone" type="text" class="form-control">
           </div>
 
           <div class="form-group">

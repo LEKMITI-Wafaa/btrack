@@ -5,9 +5,8 @@
   {{>error}}
 
 
-
-
-  <div class="row mt-3 ml-1">
+  <div class="border text-center bg-light row ml-1 mt-3">Bug Overview </div>
+  <div class="row  mt-1 ml-1">
     <div class="col-5 border p-3 ">
       <div class="row">
         <div class="col-6">Title</div>
@@ -17,19 +16,21 @@
       <div class="row mt-3 ">
         <div class="col-6">Rapported by</div>
         <div class="col-6">
-          <label class="mb-0" >{{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</label>
-          <small class=" form-text text-muted mt-0 ">  {{bug.rapportedAt.rapportDay}} at {{bug.rapportedAt.rapportTime}}</small>
+          <label class="mb-0">{{bug.rapporter.firstname}} {{bug.rapporter.lastname}}</label>
+          <small class=" form-text text-muted mt-0 "> {{bug.rapportedAt.rapportDay}} at
+            {{bug.rapportedAt.rapportTime}}</small>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-6">Services</div>
-        <div class="col-6"> {{#each bug.services}} <div class="mt-2"><label class="mb-0" >{{name}}</label><small class=" form-text text-muted mt-0 ">{{email}}</small></div>
+        <div class="col-6"> {{#each bug.services}} <div class="mt-2"><label class="mb-0">{{name}}</label><small
+              class=" form-text text-muted mt-0 ">{{email}}</small></div>
           {{/each}}</div>
       </div>
     </div>
 
     <div class="col-7 border p-3 ">
-       <div class="row mt-3">
+      <div class="row mt-3">
         <div class="col-6">Status</div>
         <h6 class="col-6">{{bug.status}}</h6>
       </div>
@@ -37,7 +38,7 @@
         <div class="col-6">Severity</div>
         <h6 class="col-6">{{bug.severity}}</h6>
       </div>
-       <div class="row mt-3">
+      <div class="row mt-3">
         <div class="col-6">Description</div>
         <h6 class="col-6">{{bug.description}}</h6>
       </div>

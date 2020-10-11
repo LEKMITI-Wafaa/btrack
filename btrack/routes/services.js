@@ -14,7 +14,8 @@ router.get("/", (req, res, next) => {
             .lean()
             .then(allServicesFromDB => {
                 console.log(allServicesFromDB)
-                res.render('account/services', { allServicesFromDB })
+                res.render('account/services', { allServicesFromDB, errors: req.session.errors })
+                req.session.errors = undefined
             })
             .catch(err => next(err))
     } else { res.redirect('/login') }
@@ -23,23 +24,27 @@ router.get("/", (req, res, next) => {
 router.post('/', [
     body('name', 'Serice name must have at least 3 chars.').isLength({ min: 3 }),
     body('email', 'Email is not valid.').isEmail(),
-    check('phone').isLength({ min: 10, max: 10 }).withMessage('Service phone must be of 10 digits long.')
+    check('phone')
+        .matches(/^\d{2}\.\d{2}\.\d{2}\.\d{2}\.\d{2}$/)
+        .withMessage('Invalid phone format. Use this format: xx.xx.xx.xx.xx')
 ], async (req, res, next) => {
     if (req.session.user) {
         const { name, phone, email } = req.body;
         const result = validationResult(req);
-        const allServicesFromDB = await Service.find({})
-        console.log(allServicesFromDB)
         if (result.isEmpty()) {
-            const isServiceExist = allServicesFromDB.find(s => s.name === name || s.email === email)
+            const isServiceExist = await Service.find().or([{ name }, { email }, { phone }])
             if (isServiceExist) {
-                res.render('account/services', { allServicesFromDB, errors: ['A service already exist with that email or name.'] });
+                req.session.errors = ['A service already exist with that email or name or phone number.']
+                res.redirect('/services');
             } else {
                 Service.create({ name, phone, email })
                     .then(serviceFromDB => res.redirect('/services'))
                     .catch(err => next(err));
             }
-        } else { res.render('account/services', { allServicesFromDB, errors: result.errors.map(e => e.msg) }) }
+        } else {
+            req.session.errors = result.errors.map(e => e.msg)
+            res.redirect('/services')
+        }
     } else { res.redirect('/login') }
 })
 
@@ -55,12 +60,30 @@ router.get('/:id/delete', (req, res, next) => {
     } else { res.redirect('/login') }
 })
 
-router.post('/:id/edit', (req, res, next) => {
+router.post('/:id/edit', [
+    body('name', 'Serice name must have at least 3 chars.').isLength({ min: 3 }),
+    body('email', 'Email is not valid.').isEmail(),
+    check('phone')
+        .matches(/^\d{2}\.\d{2}\.\d{2}\.\d{2}\.\d{2}$/)
+        .withMessage('Invalid phone format. Use this format: xx.xx.xx.xx.xx')
+], async (req, res, next) => {
     if (req.session.user) {
         const { name, phone, email } = req.body;
-        Service.findByIdAndUpdate(req.params.id, { name, phone, email }, { new: true })
-            .then(() => { res.redirect('/services') })
-            .catch(err => next(err))
+        const result = validationResult(req);
+        if (result.isEmpty()) {
+            const isServiceExist = await Service.find().or([{ name }, { email }, {phone}])
+            if (isServiceExist) {
+                req.session.errors = ['A service already exist with that email or name.']
+                res.redirect('/services');
+            } else {
+                Service.findByIdAndUpdate(req.params.id, { name, phone, email }, { new: true })
+                    .then(() => { res.redirect('/services') })
+                    .catch(err => next(err))
+            }
+        } else {
+            req.session.errors = result.errors.map(e => e.msg)
+            res.redirect('/services')
+        }
     } else { res.redirect('/login') }
 })
 
