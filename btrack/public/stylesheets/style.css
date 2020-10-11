@@ -4,4 +4,9 @@ body {
 a {
   color: #00B7FF; }
 
+  
+  footer {
+    position: absolute;
+    bottom: 0;
+  }
 /*# sourceMappingURL=style.css.map */
