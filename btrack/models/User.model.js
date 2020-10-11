@@ -6,11 +6,13 @@ const userSchema = new Schema(
   {
     firstname: {
       type: String,
-      trim: true
+      trim: true,
+      unique:false
     },
     lastname: {
       type: String,
-      trim: true
+      trim: true,
+      unique:false
     },
     service: { type: Schema.Types.ObjectId, ref: 'Service' },
     role: {
