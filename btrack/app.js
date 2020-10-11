@@ -83,8 +83,6 @@ const bugs= require('./routes/bugs');
 app.use('/bugs', bugs);
 const dashboard = require('./routes/dashboard');
 app.use('/dashboard', dashboard);
-const newBug = require('./routes/new-bug');
-app.use('/new-bug', newBug);
 const services = require('./routes/services');
 app.use('/services', services);
 
