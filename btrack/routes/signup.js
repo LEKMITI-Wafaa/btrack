@@ -11,10 +11,10 @@ const router = express.Router()
 
 router.get("/", (req, res, next) => {
   Service.find({})
+    .populate('service')
     .lean()
     .then(servicesFromDB => {
-      const data = { servicesFromDB }
-      res.render("auth/signup", data)
+      res.render("auth/signup", { servicesFromDB ,errors: req.session.errors })
     })
     .catch((err) => next(err))
 });
@@ -26,32 +26,31 @@ router.post('/',fileUploader.single('image'), [
   body('email', 'email is not valid').isEmail(),
   check('password')
     .isLength({ min: 8 }).withMessage('password must be at least 8 chars long.')
-    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase and a lowercase')
-], async(req, res, next) => {
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/).withMessage('Password must contain at least a number, an uppercase ans a lowercase')
+], async(req, res) => {
 
   const { firstname, lastname, service, role, email } = req.body;
 
-  let errors = [];
   const result = validationResult(req);
   if (req.body.password != req.body.confirmPassword) {
-    errors.push('password and confirm password fields are not identical.')
+    req.session.errors = ['password and confirm password fields are not identical.']
+    res.redirect('/signup');
   }
-  if (!result.isEmpty() || errors.length > 0) {
-    res.render('auth/signup', {
-      errors: errors.concat(result.errors.map(e => e.msg))
-    })
+  if (!result.isEmpty()) {
+    req.session.errors = result.errors.map(e => e.msg)
+    res.redirect('/signup');
   } else {
     const isUserExist = await User.findOne({email: req.body.email})
     if(isUserExist) {
-      errors.push('a user already exist with that email address.')
-      res.render('auth/signup', {errors});
+      req.session.errors = ['a user already exist with that email address.']
+      res.redirect('/signup');
     } else {
       const passwordHash = bcryptjs.hashSync(req.body.password, 10);    
       User.create({firstname, lastname, service, role, email, passwordHash, imageURL: req.file.path})
         .then(userFromDb => res.redirect('/login'))
         .catch(err => {
-          errors.push(err.message)
-          res.render('auth/signup', {errors});
+          req.session.errors = err.message
+          res.redirect('/signup');
         });
     }
 
