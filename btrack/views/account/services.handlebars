@@ -3,7 +3,7 @@
 <div class="container-fluid">
   {{>sidebar}}
 
- {{>error}}
+  {{>error}}
 
   <h2>Service list</h2>
   <div class="table-responsive">
@@ -25,9 +25,11 @@
           <td>{{email}}</td>
           <td>{{_id}}</td>
           <td>
-            <a href="/services/{{_id}}/delete"> <button class="btn btn-danger">Remove</button></a>
+            <a href="/services/{{_id}}/delete"> <button class="btn btn-danger"><i
+                  class="fas fa-trash-alt"></i></button></a>
             <button onclick="editService()" class="ml-2 btn btn-info" data-toggle="modal" data-target="#editModal"
-              data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}">Edit</button>
+              data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}"> <i
+                class="far fa-edit"></i> </button>
           </td>
         </tr>
         {{/each}}
@@ -40,8 +42,8 @@
             </th>
             <td>
               <div class="input-group input-group-lg"></div>
-              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm"
-                name="phone" placeholder="Phone" />
+              <input class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" name="phone"
+                placeholder="Phone" />
             </td>
   </div>
   <td>
@@ -50,6 +52,7 @@
       placeholder="Mail" />
   </td>
 </div>
+<td></td>
 <td>
   <button type="submit" class="btn btn-primary">Add</button>
 </td>
