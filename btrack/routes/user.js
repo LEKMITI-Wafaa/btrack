@@ -34,9 +34,9 @@ router.post('/:id/edit', routeGuard, fileUploader.single('image'), [
   if (!result.isEmpty()) {
     req.session.errors = result.errors.map(e => e.msg)
   } else {
-    const { firstname, lastname, service, role, file } = req.body;
+    const { firstname, lastname, service, role } = req.body;
     User
-      .findByIdAndUpdate(req.params.id, { firstname, lastname, service, role, imageURL: file ? file.path : user.imageURL }, { new: true })
+      .findByIdAndUpdate(req.params.id, { firstname, lastname, service, role, imageURL: req.file ? req.file.path : user.imageURL }, { new: true })
       .populate('service')
       .then(newUser => {
         req.session.user = newUser
