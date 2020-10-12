@@ -47,8 +47,9 @@ router.post('/',fileUploader.single('image'), [
       req.session.errors = ['a user already exist with that email address.']
       res.redirect('/signup');
     } else {
-      const passwordHash = bcryptjs.hashSync(req.body.password, 10);    
-      User.create({firstname, lastname, service, role, email, passwordHash, imageURL: req.file.path})
+      const passwordHash = bcryptjs.hashSync(req.body.password, 10); 
+      const imageURL = req.file ? req.file.path : 'https://res.cloudinary.com/dshuazgaz/image/upload/v1602411437/avatar_el8zal.webp'   
+      User.create({firstname, lastname, service, role, email, passwordHash, imageURL})
         .then(userFromDb => res.redirect('/login'))
         .catch(err => {
           req.session.errors = err.message

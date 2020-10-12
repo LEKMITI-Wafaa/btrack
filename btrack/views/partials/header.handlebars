@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
+<nav class="navbar d-flex navbar-expand-sm bg-dark navbar-dark justify-content-between pr-5">
 
 
-  <ul class="navbar-nav d-flex ml-2">
+  <ul class="navbar-nav d-flex ml-2  flex-grow-1">
     <li class="nav-item">
       <a class=" nav-link border border-danger rounded p-2">
         <img class=" " src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602415846/bug_aeq9du.png" alt=""
@@ -11,28 +11,19 @@
     <li class="nav-item active ">
       <a class="nav-link" href="#">B-Track</a>
     </li>
+
   </ul>
-
-
-
-  <form class="form-inline">
-
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-    <li class="nav-item dropdown">
-      {{#if user.imageURL}}
+  <li class="nav-item dropdown mr-3">
       <a class=" dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img
           src="{{user.imageURL}}" class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image"></a>
-      {{else}}
-      <a class=" dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img
-          src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602411437/avatar_el8zal.webp"
-          class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image"></a>
-      {{/if}}
       <div class="dropdown-menu">
         <a class="dropdown-item" href="/user/{{user._id}}/edit">My Account</a>
         <a class="dropdown-item" href="/user/logout">Logout</a>
       </div>
     </li>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2 ml-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
   </form>
 </nav>
 
