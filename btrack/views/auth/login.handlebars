@@ -1,36 +1,34 @@
+<div class="container center ">
+  <h3 class="border text-center text-secondary p-2" style="background-color: beige;">Login</h3>
+  <form class=" border form-signin p-5" action="/login" method="POST">
+    <div class="text-center mb-4 justify-content-center N-self-center">
+      <img class="mb-4" src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602415846/bug_aeq9du.png" alt=""
+        width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">B-Track</h1>
+      <p>B-Track is your favorite tool to manage your bugs</p>
+    </div>
+
+    {{#if errorMessage}}
+    <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
+    {{/if}}
+
+    <div class="form-label-group mb-3">
+      <label for="inputEmail">Email address</label>
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
+        autofocus="">
+    </div>
+
+    <div class="form-label-group mb-3">
+      <label for="inputPassword">Password</label>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" style="background-color: #f43a45;" type="submit">Sign in</button>
+    <a href="/signup" class="badge badge-dark mt-2">Sign up</a>
+
+    <p class="mt-5 mb-3 text-muted text-center">© Marwa & Wafâa 2020</p>
 
 
-
-<form class=" card form-signin container w-50 mt-5 p-5 " action="/login" method="POST">
-  <div class="text-center mb-4 justify-content-center align-self-center">
-    <img class="mb-4" src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602415846/bug_aeq9du.png" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">B-Track</h1>
-    <p>B-Track is your favorite tool to manage your bugs</p>
-  </div>
-
-  {{#if errorMessage}}
-  <div class="alert alert-danger" role="alert">{{errorMessage}}</div>
-  {{/if}}
-
-  <div class="form-label-group mb-3">
-    <label for="inputEmail">Email address</label>
-    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
-      autofocus="">
-  </div>
-
-  <div class="form-label-group mb-3">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-
-  </div>
-
-  {{!-- <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div> --}}
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted text-center">© Marwa & Wafâa 2020</p>
-
-
-</form>
+  </form>
+</div>

@@ -4,9 +4,12 @@ body {
 a {
   color: #00B7FF; }
 
-  
-  footer {
-    position: absolute;
-    bottom: 0;
-  }
-/*# sourceMappingURL=style.css.map */
+
+.center {
+  margin: 5 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
