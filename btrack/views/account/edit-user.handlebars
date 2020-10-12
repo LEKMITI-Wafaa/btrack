@@ -2,9 +2,7 @@
 <div class="container-fluid">
   {{>sidebar}}
   <div class="container w-75">
-    {{#each errors}}
-      <div class="alert alert-danger" role="alert">{{this}}</div>
-    {{/each}}
+    {{>error}}
     <form  action="/user/{{user._id}}/edit" method="POST" enctype="multipart/form-data">
 
       <div class="form-group row mt-5">
@@ -45,17 +43,17 @@
           <label for="inputService">Service</label>
           <select id="inputService" name="service" class="form-control">
             {{!-- afficher tous les service dans une boite select --}}
-            {{#each servicesFromDB}}
-              <option value="{{_id}}" {{#if selected}}selected="selected" {{/if}}>{{name}}</option>
+            {{#each services}}
+              <option value="{{_id}}" {{#if selected}} selected {{/if}} >{{name}}</option>
             {{/each}}
           </select>
         </div>
         <div class="form-group col-md-6">
           <label for="inputRole">Role</label>
           <select name="role" id="inputRole" class="form-control">
-            <option value="manager">Manager</option>
-            <option value="employee">Employee</option>
-            <option value="validator">Validator</option>
+             {{#each roles}}
+              <option value="{{role}}" {{#if selected}} selected {{/if}} >{{role}}</option>
+            {{/each}}
           </select>
         </div>
       </div>
@@ -63,7 +61,7 @@
       <button type="reset" class="btn btn-secondary">Reset</button>
     </form>
     
-    <form  action="/user/{{user._id}}/edit-password" method="POST">
+    <form  action="/user/{{user._id}}/edit-password" method="POST" class="mt-5 border-top pt-3">
     <div class="form-row mt-3">
       <div class="form-group col-md-6">
         <label for="inputPassword">Password</label>

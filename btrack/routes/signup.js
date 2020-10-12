@@ -15,6 +15,7 @@ router.get("/", (req, res, next) => {
     .lean()
     .then(servicesFromDB => {
       res.render("auth/signup", { servicesFromDB ,errors: req.session.errors })
+      req.session.errors = undefined
     })
     .catch((err) => next(err))
 });
@@ -30,6 +31,7 @@ router.post('/',fileUploader.single('image'), [
 ], async(req, res) => {
 
   const { firstname, lastname, service, role, email } = req.body;
+  console.log('coucou', req.file.path)
 
   const result = validationResult(req);
   if (req.body.password != req.body.confirmPassword) {

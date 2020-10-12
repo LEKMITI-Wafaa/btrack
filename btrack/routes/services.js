@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
             .sort({name:1})
             .lean()
             .then(allServicesFromDB => {
-                res.render('account/services', { allServicesFromDB, errors: req.session.errors })
+                res.render('account/services', { allServicesFromDB, user: req.session.user, errors: req.session.errors })
                 req.session.errors = undefined
             })
             .catch(err => next(err))

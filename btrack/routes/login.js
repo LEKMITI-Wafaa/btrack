@@ -23,6 +23,7 @@ router.post('/', (req, res, next) => {
   }
 
   User.findOne({ email: email })
+    .populate('service')
     .then(user => {
       if (!user) {
         res.render('auth/login', { errorMessage: 'Incorrect email/password' })
