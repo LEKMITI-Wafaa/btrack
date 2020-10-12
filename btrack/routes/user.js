@@ -30,7 +30,6 @@ router.post('/:id/edit', routeGuard, fileUploader.single('image'), [
   check('lastname').isLength({ min: 3 }).withMessage('Lastname must have at least 3 chars')
 ], (req, res, next) => {
   const result = validationResult(req);
-  console.log('req.body', req.body)
   let user = req.session.user;
   if (!result.isEmpty()) {
     req.session.errors = result.errors.map(e => e.msg)

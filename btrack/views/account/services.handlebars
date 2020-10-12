@@ -24,10 +24,10 @@
           <td>{{phone}}</td>
           <td>{{email}}</td>
           <td>{{_id}}</td>
-          <td>
+          <td class="d-flux">
             <a href="/services/{{_id}}/delete"> <button class="btn btn-danger"><i
                   class="fas fa-trash-alt"></i></button></a>
-            <button onclick="editService()" class="ml-2 btn btn-info" data-toggle="modal" data-target="#editModal"
+            <button onclick="editService()" class="btn btn-info" data-toggle="modal" data-target="#editModal"
               data-id="{{_id}}" data-name="{{name}}" data-phone="{{phone}}" data-email="{{email}}"> <i
                 class="far fa-edit"></i> </button>
           </td>
