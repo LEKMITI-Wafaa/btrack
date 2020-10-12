@@ -20,3 +20,6 @@ a {
   padding-top: 20px;
   min-height: calc(100vh - 50px);
 }
+.sidebar a {
+  color: #2d4966;
+ }
