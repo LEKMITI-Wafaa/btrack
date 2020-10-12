@@ -4,9 +4,10 @@ const User = require('../models/User.model.js');
 const Service= require('../models/Services.model.js');
 const { body,check, validationResult } = require('express-validator');
 const router = require('./login');
+const fileUploader = require('../configs/cloudinary.config');
 
 
-router.post('/:id/edit', [
+router.post('/:id/edit',fileUploader.single('image'), [
   check('firstname').isLength({ min: 3 }).withMessage('Firstname must have at least 3 chars'),
   check('lastname').isLength({ min: 3 }).withMessage('Lastname must have at least 3 chars')
 ], (req, res, next)=>{
@@ -21,8 +22,8 @@ router.post('/:id/edit', [
     } else {
         const {firstname, lastname, service, role} = req.body;
         console.log('coucou',req.params.id)
-        User.findByIdAndUpdate(req.params.id, {firstname, lastname, service, role})
-          .then(userFromDb => res.render('account/dashboard'),{user})
+        User.findByIdAndUpdate(req.params.id, {firstname, lastname, service, role, imageURL: req.file.path})
+          .then(userFromDb => res.redirect('/dashboard'),{user})
           .catch(err => next(err));
       }
   }else {
@@ -61,6 +62,14 @@ router.post('/:id/edit-password',[
 }
 })
 
+router.post('/logout', (req, res) => {
+
+  req.session.destroy();
+  console.log('logout',req.session.user)
+  res.redirect('/login');
+});
+
+
 router.get('/:id', (req, res, next) =>{
   let user = req.session.user;
     if (req.session.user) {
@@ -79,5 +88,7 @@ router.get('/:id', (req, res, next) =>{
       res.redirect('/login')
   }   
 })
+
+
 
 module.exports = router;

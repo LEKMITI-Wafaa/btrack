@@ -19,16 +19,20 @@
     
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-    {{#if user.imageURL}}
-     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false"><img src="{{user.imageURL}}" class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image">
-      </a>
-    {{else}}
-    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false"><img src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602411437/avatar_el8zal.webp" class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image">
-      </a>
-    {{/if}}
-
-
+    <li class="nav-item dropdown">
+        {{#if user.imageURL}}          
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{{user.imageURL}}" class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image"></a>  
+        {{else}}
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="https://res.cloudinary.com/dshuazgaz/image/upload/v1602411437/avatar_el8zal.webp" class="rounded-circle z-depth-0" width="40" height="40" alt="avatar image"></a>
+        {{/if}}
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/user/{{_id}}">My Account</a>
+        <a class="dropdown-item" href="/user/logout">Logout</a>
+      </div>
+    </li>
   </form>
 </nav>
+
+
+
+{{!-- <form id="logout-form" action="/user/logout" method="POST"><button>Logout</button></form> --}}
