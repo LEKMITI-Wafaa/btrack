@@ -91,4 +91,7 @@ app.use('/dashboard', dashboard);
 const services = require('./routes/services');
 app.use('/services', services);
 
+const repport = require('./routes/repport');
+app.use('/repport', repport);
+
 module.exports = app;
