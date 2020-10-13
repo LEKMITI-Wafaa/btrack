@@ -31,8 +31,6 @@ router.post('/',fileUploader.single('image'), [
 ], async(req, res) => {
 
   const { firstname, lastname, service, role, email } = req.body;
-  console.log('coucou', req.file.path)
-
   const result = validationResult(req);
   if (req.body.password != req.body.confirmPassword) {
     req.session.errors = ['password and confirm password fields are not identical.']
