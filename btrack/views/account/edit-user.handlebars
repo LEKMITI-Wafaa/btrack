@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container-fluid">
   {{>sidebar}}
-  <div class="container w-75">
+  <div class="container w-75 pb-5">
     {{>error}}
     <form  action="/user/{{user._id}}/edit" method="POST" enctype="multipart/form-data">
 
@@ -61,7 +61,7 @@
       <button type="reset" class="btn btn-secondary">Reset</button>
     </form>
     
-    <form  action="/user/{{user._id}}/edit-password" method="POST" class="mt-5 border-top pt-3">
+    <form  action="/user/{{user._id}}/edit-password" method="POST" class="mt-5 border-top pt-3 form">
     <div class="form-row mt-3">
       <div class="form-group col-md-6">
         <label for="inputPassword">Password</label>
@@ -75,8 +75,9 @@
     </div>
     <button type="submit" class="btn btn-primary"><i class=" mr-1 far fa-save"></i>Save Password</button>
     <button type="reset" class="btn btn-secondary">Reset</button>
+
     </form>
+
   </div>
 </div>
 
-{{>footer}}
