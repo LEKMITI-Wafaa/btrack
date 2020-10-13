@@ -18,8 +18,9 @@ router.get('/:id/edit', routeGuard, (req, res, next) => {
       const roles = ['manager', 'employee', 'validator'].map(role => {
         return { role, selected: role === user.role }
       })
-      res.render('account/edit-user', { services, user, roles, errors: req.session.errors })
+      res.render('account/edit-user', { services, user, roles, errors: req.session.errors, success: req.session.success })
       req.session.errors = undefined
+      req.session.success = undefined
     })
     .catch(err => next(err))
 })
@@ -40,6 +41,7 @@ router.post('/:id/edit', routeGuard, fileUploader.single('image'), [
       .populate('service')
       .then(newUser => {
         req.session.user = newUser
+        req.session.success = 'User infos has been modified successfully'
         res.redirect('/user/' + req.params.id + '/edit')
       })
       .catch(err => next(err));
@@ -59,14 +61,21 @@ router.post('/:id/edit-password', routeGuard, [
   if (req.body.password != req.body.confirmPassword) {
     req.session.errors = ['password and confirm password fields are not identical.']
     res.redirect('/user/' + req.params.id + '/edit')
+    return; // STOP
   }
   if (!result.isEmpty()) {
     req.session.errors = result.errors.map(e => e.msg)
     res.redirect('/user/' + req.params.id + '/edit')
+    return; // STOP
   } else {
     const passwordHash = bcryptjs.hashSync(req.body.password, 10);
-    User.findByIdAndUpdate(req.params.id, { passwordHash }, { upsert: true })
-      .then(userFromDb => res.redirect('/dashboard'), { user })
+    User.findByIdAndUpdate(req.params.id, { passwordHash }, { new: true })
+      .populate('service')
+      .then(newUser => {
+        req.session.user = newUser
+        req.session.success = 'User password has been modified successfully'
+        res.redirect('/user/' + req.params.id + '/edit')
+      })
       .catch(err => {
         req.session.errors = err.message
         res.redirect('/user/' + req.params.id + '/edit')
